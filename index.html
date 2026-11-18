@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lean Green Belt Dojo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f7f2;--card:#ffffff;--ink:#16221a;--muted:#5d6b61;--line:#dfe7dc;
+  --g:#2f8f4e;--g2:#1f6b39;--gl:#e3f3e7;--gold:#e8a317;--goldl:#fdf2d6;--red:#d64545;--redl:#fbe5e5;
+  --blue:#2f6fb3;--bluel:#e3eefa;--purple:#6b4fbb;--purplel:#ece7fa;--teal:#16897d;--teall:#dcf3f0;
+  --r:16px;--sh:0 1px 2px rgba(20,40,25,.06),0 4px 16px rgba(20,40,25,.06);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0f1511;--card:#18211b;--ink:#e6eee7;--muted:#9aaa9e;--line:#2a372e;
+  --g:#4cbb6c;--g2:#7fd895;--gl:#1d3324;--gold:#f0b73a;--goldl:#3a2e12;--red:#ef6b6b;--redl:#3b1d1d;
+  --blue:#6aa7e6;--bluel:#182a3d;--purple:#a28cf0;--purplel:#272040;--teal:#3fc2b3;--teall:#14312d;
+  --sh:0 1px 2px rgba(0,0,0,.3);
+}}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:15.5px}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.app{display:flex;min-height:100vh}
+nav.side{width:230px;flex-shrink:0;background:var(--card);border-right:1px solid var(--line);padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 18px;font-weight:800;font-size:17px}
+.belt{width:34px;height:34px;border-radius:10px;background:var(--g);display:grid;place-items:center;color:#fff;font-size:18px}
+nav.side a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:var(--muted);text-decoration:none;font-weight:600}
+nav.side a:hover{background:var(--gl);color:var(--ink)}
+nav.side a.on{background:var(--gl);color:var(--g2)}
+nav.side a span.i{width:22px;text-align:center}
+.xpbox{margin-top:auto;background:var(--bg);border-radius:12px;padding:12px}
+.xpbar{height:8px;border-radius:6px;background:var(--line);overflow:hidden;margin:6px 0}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--gold));border-radius:6px;transition:width .5s}
+main{flex:1;min-width:0;padding:28px clamp(16px,4vw,44px) 100px;max-width:1100px}
+h1{font-size:28px;margin:0 0 6px;letter-spacing:-.02em}
+h2{font-size:21px;margin:28px 0 12px;letter-spacing:-.01em}
+h3{font-size:16.5px;margin:18px 0 8px}
+.sub{color:var(--muted);margin:0 0 22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--sh)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.stat{font-size:28px;font-weight:800;letter-spacing:-.02em}
+.lbl{font-size:12.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.btn{border:none;border-radius:12px;padding:11px 18px;font-weight:700;background:var(--g);color:#fff;transition:transform .08s,filter .15s}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.ghost:hover{border-color:var(--g);color:var(--g2)}
+.btn.gold{background:var(--gold);color:#2a1d00}
+.btn.sm{padding:7px 12px;font-size:13.5px;border-radius:10px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:12.5px;font-weight:700;background:var(--gl);color:var(--g2)}
+.pill.gold{background:var(--goldl);color:var(--gold)}.pill.red{background:var(--redl);color:var(--red)}
+.pill.blue{background:var(--bluel);color:var(--blue)}.pill.purple{background:var(--purplel);color:var(--purple)}
+.mod{cursor:pointer;transition:transform .12s,border-color .12s;position:relative}
+.mod:hover{transform:translateY(-2px);border-color:var(--g)}
+.mod .num{font-size:12px;font-weight:800;color:var(--muted)}
+.mod h3{margin:6px 0 6px}
+.mod .done{position:absolute;top:14px;right:14px}
+.prog{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:12px}
+.prog i{display:block;height:100%;background:var(--g)}
+.layer{border-radius:14px;padding:16px 18px;margin:12px 0;border:1px solid var(--line)}
+.layer .lt{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.L1{background:var(--goldl);border-color:transparent}.L1 .lt{color:var(--gold)}
+.L2{background:var(--purplel);border-color:transparent}.L2 .lt{color:var(--purple)}
+.L3{background:var(--card)}.L3 .lt{color:var(--blue)}
+.L4{background:var(--teall);border-color:transparent}.L4 .lt{color:var(--teal)}
+.L5{background:var(--redl);border-color:transparent}.L5 .lt{color:var(--red)}
+.layer ul{margin:6px 0;padding-left:20px}.layer li{margin:3px 0}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.mono{font-family:'JetBrains Mono',monospace;font-size:14px}
+.formula{font-family:'JetBrains Mono',monospace;background:var(--bg);border-radius:10px;padding:10px 14px;margin:8px 0;font-size:14px;border-left:4px solid var(--g)}
+.opt{display:block;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0;color:var(--ink);font-weight:500;transition:border-color .1s,background .1s}
+.opt:hover:not(:disabled){border-color:var(--g)}
+.opt.ok{border-color:var(--g);background:var(--gl)}
+.opt.bad{border-color:var(--red);background:var(--redl)}
+.opt.pick{border-color:var(--blue);background:var(--bluel)}
+.opt:disabled{cursor:default}
+.opt b{display:inline-block;width:24px;color:var(--muted)}
+.expl{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--bg);font-size:14.5px}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.qtext{font-size:17px;font-weight:600;margin:4px 0 8px}
+.flash{perspective:1200px;height:270px;margin:10px 0 16px;cursor:pointer;user-select:none}
+.flash .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash.flip .in{transform:rotateY(180deg)}
+.flash .f,.flash .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px;text-align:center;border:1px solid var(--line);box-shadow:var(--sh)}
+.flash .f{background:var(--card);font-size:24px;font-weight:800}
+.flash .b{background:var(--gl);transform:rotateY(180deg);font-size:16.5px}
+.flash .hint{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:14px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(40px);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:12px;font-weight:700;opacity:0;transition:.3s;z-index:50;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.tile{border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--card);font-weight:600;text-align:center;min-height:64px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.tile:hover:not(.gone){border-color:var(--g)}
+.tile.sel{border-color:var(--blue);background:var(--bluel)}
+.tile.gone{opacity:.3;border-style:dashed;cursor:default}
+.tile.wrong{animation:shake .35s;border-color:var(--red)}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.mem{aspect-ratio:1.25;font-size:13.5px}
+.mem.hidden{background:var(--g);color:transparent;border-color:var(--g)}
+.mem.hidden::after{content:'?';color:#fff;font-size:22px;font-weight:800}
+.mem.matched{background:var(--gl);border-color:var(--g);color:var(--g2)}
+.bigq{font-size:19px;font-weight:700;padding:18px;border-radius:14px;background:var(--bg);margin:8px 0 14px;min-height:90px;display:flex;align-items:center}
+.combo{font-weight:800;color:var(--gold)}
+.timer{font-family:'JetBrains Mono',monospace;font-weight:700;padding:5px 12px;border-radius:10px;background:var(--bg)}
+.dots{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0}
+.dots span{width:26px;height:26px;border-radius:7px;background:var(--bg);border:1px solid var(--line);font-size:11px;display:grid;place-items:center;font-weight:700;cursor:pointer}
+.dots span.a{background:var(--bluel);border-color:var(--blue);color:var(--blue)}
+.dots span.c{outline:2px solid var(--ink)}
+.dots span.ok{background:var(--gl);color:var(--g2);border-color:var(--g)}
+.dots span.bad{background:var(--redl);color:var(--red);border-color:var(--red)}
+.bar{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:14px}
+.bar .t{width:170px;flex-shrink:0}
+.bar .b{flex:1;height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar .b i{display:block;height:100%}
+.hero{background:linear-gradient(135deg,var(--g) 0%,var(--g2) 100%);color:#fff;border-radius:22px;padding:26px;position:relative;overflow:hidden}
+@media (prefers-color-scheme:dark){.hero{background:linear-gradient(135deg,#1f5a33,#163d24)}}
+.hero h1{color:#fff}.hero p{opacity:.92;margin:6px 0 16px;max-width:620px}
+.hero .btn{background:#fff;color:#1f6b39}
+.hero .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.hero .deco{position:absolute;right:-20px;top:-20px;font-size:150px;opacity:.12;transform:rotate(-12deg)}
+.road{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.road div{flex:1;min-width:120px;padding:12px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13.5px}
+.road b{display:block;font-size:12px;color:var(--g2)}
+.sortbins{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.bin{min-height:120px;border:2px dashed var(--line);border-radius:14px;padding:10px}
+.bin h4{margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.chip{display:inline-block;padding:6px 10px;margin:3px;border-radius:9px;background:var(--bg);font-size:13px;font-weight:600;border:1px solid var(--line)}
+.chip.ok{background:var(--gl);border-color:var(--g)}.chip.bad{background:var(--redl);border-color:var(--red)}
+input.num{font-family:'JetBrains Mono',monospace;font-size:16px;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);width:160px}
+input.num:focus{outline:none;border-color:var(--g)}
+.err{color:var(--red);font-size:13px;font-weight:600;margin-top:6px}
+select{font-family:inherit;padding:8px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-weight:600}
+.cheat h3{margin-top:0;color:var(--g2)}
+.cheat ul{margin:4px 0;padding-left:18px;font-size:14px}.cheat li{margin:2px 0}
+.kbd{font-family:'JetBrains Mono',monospace;font-size:12px;padding:2px 6px;border-radius:5px;border:1px solid var(--line);background:var(--bg)}
+.confetti{position:fixed;top:-10px;width:9px;height:14px;z-index:60;pointer-events:none;animation:fall 1.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.2}}
+.back{color:var(--muted);text-decoration:none;font-weight:700;font-size:14px;display:inline-block;margin-bottom:12px}
+.mnav{display:none}
+@media (max-width:820px){
+  nav.side{display:none}
+  main{padding-bottom:110px}
+  .mnav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);z-index:40;justify-content:space-around;padding:6px 2px calc(6px + env(safe-area-inset-bottom))}
+  .mnav a{display:flex;flex-direction:column;align-items:center;font-size:10.5px;font-weight:700;color:var(--muted);text-decoration:none;padding:4px 6px;border-radius:8px}
+  .mnav a .i{font-size:19px}
+  .mnav a.on{color:var(--g2);background:var(--gl)}
+  .bar .t{width:110px}
+  .flash{height:300px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<nav class="side" id="side"></nav>
+<main id="main"></main>
+</div>
+<nav class="mnav" id="mnav"></nav>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= DATA ================= */
+const TOPICS={
+ found:'Lean foundations',value:'Identify value (VOC, stakeholders)',waste:'8 wastes',s5:'5S & visual management',
+ map:'Process mapping',vsm:'Value stream & value analysis',flow:'Takt time & flow',rca:'Root cause, 5 Whys & PDCA',
+ pull:'Push, pull & kanban',std:'Standard work, SMED & TPM',perf:'Seek perfection (poka yoke, kaizen, A3, change)'
+};
+const TOPIC_COLORS={found:'#6b4fbb',value:'#2f6fb3',waste:'#d64545',s5:'#e8a317',map:'#16897d',vsm:'#2f8f4e',flow:'#c2571a',rca:'#8a3fa0',pull:'#2f6fb3',std:'#16897d',perf:'#2f8f4e'};
+
+const MODULES=[
+{id:'found',n:1,icon:'🏯',title:'Lean foundations',principle:'Before step 1',time:'12 min',
+ summary:'What Lean, Six Sigma and LSS are, the belts, the history, the Shingo model and the 5 Lean principles.',
+ intuition:'Lean is about making work flow to the customer with nothing wasted, and doing it with respect for the people who do the work. Lean asks "is this step worth it to the customer?" Six Sigma asks "how much does this step vary?"',
+ analogy:'Think of a kitchen. Lean clears clutter, removes extra walking and cooks only what was ordered. Six Sigma makes sure every plate tastes the same each time. Lean Six Sigma does both.',
+ formal:`<ul>
+ <li><b>Lean</b>: improvement method using tools, techniques and measures to meet customer expectations by <b>reducing waste</b> and minimizing defects, <b>while respecting people</b>.</li>
+ <li><b>Six Sigma</b>: rigorous data analytics and statistical tools to improve quality by <b>minimizing process variability</b>.</li>
+ <li><b>Lean Six Sigma</b>: combines eliminating defects/waste (Lean) with minimizing variability (Six Sigma).</li>
+ <li><b>Belts</b>: Yellow = basic knowledge. <b>Green = project leadership</b> (manages projects, delivers quantitative results). Black = mentors for multiple projects and Green Belts.</li>
+ </ul>
+ <h3>The 5 Lean principles (the course roadmap)</h3>
+ <table><tr><th>#</th><th>Principle</th><th>Meaning</th></tr>
+ <tr><td>1</td><td>Identify value</td><td>Define value from the customer's perspective</td></tr>
+ <tr><td>2</td><td>Map the value stream</td><td>Identify all actions required to create the product or service</td></tr>
+ <tr><td>3</td><td>Create flow</td><td>Eliminate barriers and reduce waste</td></tr>
+ <tr><td>4</td><td>Establish pull</td><td>Let the customer pull products as needed</td></tr>
+ <tr><td>5</td><td>Seek perfection</td><td>Continuously improve; begin the next transformation</td></tr></table>
+ <h3>History timeline</h3>
+ <table><tr><th>When</th><th>Who / what</th></tr>
+ <tr><td>Ancient Mesopotamia →</td><td>Roots of the scientific method</td></tr>
+ <tr><td>1799</td><td>Eli Whitney: interchangeable parts (cotton gin era)</td></tr>
+ <tr><td>1911</td><td>Frederick Taylor: scientific management</td></tr>
+ <tr><td>~1915</td><td>Frank &amp; Lillian Gilbreth: process charts, motion studies in healthcare</td></tr>
+ <tr><td>1922</td><td>Ford &amp; Sorensen: assembly/flow lines, mass production</td></tr>
+ <tr><td>1940s–50s</td><td>W. Edwards Deming: Plan-Do-Study-Act cycle, statistical quality control</td></tr>
+ <tr><td>Post-war</td><td>Taiichi Ohno &amp; Shigeo Shingo: JIT in the Toyota Production System (TPS)</td></tr>
+ <tr><td>1988</td><td>John Krafcik coins "Lean" ("Triumph of the Lean Production System")</td></tr></table>
+ <h3>Shingo Model (operational excellence framework, Shingo Institute)</h3>
+ <ul><li>Principles: respect every individual, lead with humility, focus on process, embrace scientific thinking, flow &amp; pull value, assure quality at the source, seek perfection, create constancy of purpose.</li>
+ <li>Four dimensions: <b>cultural enablers</b>, <b>continuous improvement</b>, <b>enterprise alignment</b>, <b>results</b>.</li></ul>
+ <h3>Entrepreneurial mindset (KEEN)</h3>
+ <p>The 3 Cs are <b>Curiosity, Connections, Creating value</b>. Skillset + mindset = entrepreneurial mindset.</p>`,
+ example:'Quick quiz from the slides. Lean is inspired by the <b>Toyota Production System</b>, created by <b>Toyota</b>. Many Lean terms are <b>Japanese</b> because they come from TPS. Lean was used mainly in <b>manufacturing</b> before spreading to healthcare and services.',
+ traps:['Green Belt = <b>project leadership</b>; Black Belt = mentors. Don\'t mix them up.','"Lean" was coined by <b>Krafcik in 1988</b>, not by Ohno.','Deming is linked to <b>PDSA/PDCA and SQC</b>; Taylor to scientific management; Gilbreths to motion studies.','Lean = waste + <b>respect for people</b>; Six Sigma = <b>variation</b>.']},
+
+{id:'value',n:2,icon:'🎯',title:'Identify value: VOC & stakeholders',principle:'Step 1 · Identify value',time:'15 min',
+ summary:'Who the customer is, how to capture VOC, VA vs NVA vs NNVA, and stakeholder analysis with the power-interest grid.',
+ intuition:'Only the customer decides what is valuable. If the customer would not pay for a step, that step is waste or, at best, a required evil.',
+ analogy:'At a coffee shop you pay for the coffee to be made. You don\'t pay for the barista hunting for the milk or redoing a wrong order. Hand-washing is required by health code, so it stays, but it should be fast.',
+ formal:`<ul>
+ <li><b>External customers</b>: buy your products or services (end-users, clients). <b>Internal customers</b>: departments or people inside the organization who rely on your work. Key question: <i>who benefits from the process?</i></li>
+ <li><b>VOC</b> = collection of customer <b>needs, preferences and feedback</b>. Components: needs (want/expect), preferences (like/dislike), <b>pain points</b> (frustrations).</li>
+ <li><b>VOC methods</b>: surveys (quantitative + qualitative), interviews (one-on-one, in depth), focus groups (collective insights), feedback forms, observation (watch real-time use), complaints/compliments.</li>
+ </ul>
+ <h3>Value-added vs non-value-added</h3>
+ <table><tr><th>Type</th><th>Test</th><th>Action</th></tr>
+ <tr><td><b>Value-added (VA)</b></td><td>Customer is willing to pay; it <b>transforms</b> the product; it is <b>done right the first time</b></td><td>Keep and optimize</td></tr>
+ <tr><td><b>Unnecessary NVA</b> (waste)</td><td>Not valued and not essential</td><td><b>Eliminate</b></td></tr>
+ <tr><td><b>Necessary NVA</b> (value-enabling)</td><td>Not valued, but required by law, regulation or safety</td><td><b>Minimize</b> its time</td></tr></table>
+ <p>Typically <b>more than 50%</b> of the steps, time and cost in a process are waste.</p>
+ <h3>Stakeholder analysis</h3>
+ <ul><li>Identify and assess people or groups who <b>can impact or are impacted</b> by the project. It aligns goals, gains support, spots resistance early and prioritizes effort.</li>
+ <li>Internal (employees, managers, teams) vs external (customers, suppliers, regulators, community).</li>
+ <li><b>Primary</b> = directly affected (customers, employees). <b>Secondary</b> = indirectly affected (suppliers, regulators). <b>Key</b> = significant influence on success or failure (senior management, key customers).</li></ul>
+ <h3>Power-interest grid</h3>
+ <table><tr><th></th><th>Low interest</th><th>High interest</th></tr>
+ <tr><td><b>High power</b></td><td>Keep satisfied</td><td><b>Manage closely</b></td></tr>
+ <tr><td><b>Low power</b></td><td>Monitor (minimum effort)</td><td>Keep informed</td></tr></table>
+ <p><b>Engagement strategies</b>: <b>Inform</b> (newsletters, reports) · <b>Consult</b> (focus groups, workshops) · <b>Collaborate</b> (cross-functional teams) · <b>Monitor</b> (track feedback, adjust).</p>
+ <p>Typical expectations: management wants efficiency, cost savings and ROI. Employees want job stability, streamlined processes and less workload. Customers want quality, speed and value. Suppliers want clear communication and consistent demand.</p>`,
+ example:`<b>OR case.</b> The surgeon chief and the CFO have high power and high interest, so <b>manage closely</b>. The patients' families have low power and high interest, so <b>keep informed</b>. A regulator with high power and low day-to-day interest is <b>keep satisfied</b>. Classifying OR steps: surgery = VA, the safety time-out = necessary NVA, the patient waiting on a gurney = unnecessary NVA.`,
+ traps:['"Who determines value?" <b>The customer</b>, always.','Necessary NVA is <b>minimized</b>, not eliminated (regulations, safety).','Regulators and suppliers = <b>secondary</b> stakeholders in the slides\' examples.','High power + high interest = <b>manage closely</b>.']},
+
+{id:'waste',n:3,icon:'🗑️',title:'The 8 wastes (DOWNTIME)',principle:'Step 2 · Map the value stream',time:'12 min',
+ summary:'Muda and the 8 wastes, with examples you can spot in any workplace.',
+ intuition:'Waste (muda) is anything the customer would not pay for. Learn to see these 8 and you can find waste anywhere.',
+ analogy:'Ohno said he was only looking at the timeline from the customer\'s order to collecting the cash, and shrinking it by removing waste. Picture that timeline as a rope full of knots, where each knot is one of the 8 wastes.',
+ formal:`<p><b>Muda</b> (Japanese) = futility, uselessness, wastefulness: non-value-added work the customer would not pay for.</p>
+ <table><tr><th>Waste</th><th>Definition</th><th>Examples</th></tr>
+ <tr><td><b>D</b>efect</td><td>Errors needing extra time, resources or money to fix</td><td>Wrong test ordered, incorrect form, unclear instructions</td></tr>
+ <tr><td><b>O</b>verproduction</td><td>More than needed, or <b>sooner</b> than needed</td><td>Producing before orders, duplicated effort, overstaffing. <b>Greatest waste (Toyota)</b></td></tr>
+ <tr><td><b>W</b>aiting</td><td>Idle time when material, information or people aren't ready</td><td>Waiting for approval, supplies, a machine cycle, the doctor</td></tr>
+ <tr><td><b>N</b>eglected talent</td><td>Losing ideas or skills by not engaging employees. <b>Added later</b>, not one of the original 7</td><td>Front line not included, ideas not followed up, micro-managing</td></tr>
+ <tr><td><b>T</b>ransportation</td><td>Unnecessary movement of <b>materials or objects</b></td><td>Moving inventory several times, centralized storage, moving papers</td></tr>
+ <tr><td><b>I</b>nventory</td><td>More materials or supplies on hand than needed right now</td><td>Excess raw material, WIP, extra subcomponents</td></tr>
+ <tr><td><b>M</b>otion</td><td>Wasted movement of <b>people</b></td><td>Searching for supplies, poor layout, walking between stations</td></tr>
+ <tr><td><b>E</b>xcess processing</td><td>Extra steps not valued by the customer</td><td>Unneeded paperwork, over-inspection, re-entering data</td></tr></table>
+ <p>Other mnemonics: <b>TIM WOOD</b>, <b>TIM U WOOD</b>, <b>TRIM WOOD</b>.</p>`,
+ example:`Sort these hospital moments. A nurse walks 300 ft to find gloves = <b>Motion</b>. A patient on a gurney outside the OR = <b>Waiting</b>. Trays carried to central sterile and back twice = <b>Transportation</b>. Entering the same vitals into 3 systems = <b>Excess processing</b>. 40 extra suture kits in the closet = <b>Inventory</b>. A wrong-site consent form = <b>Defect</b>.`,
+ traps:['<b>Transportation = things</b> move; <b>Motion = people</b> move. This is the #1 trap.','<b>Overproduction</b> is the greatest waste because it causes the others (inventory, transport, waiting).','Overproduction includes producing <b>too early</b>, not only too much.','Neglected talent was <b>added later</b>; the original TPS list had 7.']},
+
+{id:'s5',n:4,icon:'🧹',title:'5S & visual management',principle:'Step 2 · Map the value stream',time:'12 min',
+ summary:'Sort, Set in order, Shine, Standardize, Sustain with Japanese names, red tags, storage rules, and visual management.',
+ intuition:'"A place for everything and everything in its place." 5S makes problems visible because an abnormal thing stands out in an organized space.',
+ analogy:'Like your phone home screen. Delete unused apps (Sort), put daily apps in the dock (Set in order), clear notifications (Shine), keep one folder layout (Standardize), and review it monthly (Sustain).',
+ formal:`<table><tr><th>#</th><th>English</th><th>Japanese</th><th>What you do</th></tr>
+ <tr><td>1</td><td><b>Sort</b></td><td>Seiri</td><td>Decide what to keep and remove; get rid of clutter. <b>Red tag</b> items that are neither kept nor thrown away (recycle, storage, donate, repair, other department). Verify before throwing away.</td></tr>
+ <tr><td>2</td><td><b>Set in order</b></td><td>Seiton</td><td>Best location, label it, set inventory limits, visual controls, nothing on the floor. <b>You</b> find anything in ≤30 s; <b>anyone</b> finds anything in ≤60 s.</td></tr>
+ <tr><td>3</td><td><b>Shine</b></td><td>Seiso</td><td>Clean everything top to bottom; establish safety measures</td></tr>
+ <tr><td>4</td><td><b>Standardize</b></td><td>Seiketsu</td><td>Rules for maintaining the space; <b>designate an owner</b>; keep the first 3S as habits; schedules and checklists</td></tr>
+ <tr><td>5</td><td><b>Sustain</b></td><td>Shitsuke</td><td>Spread 5S and build the culture: leadership involvement, <b>gemba walks</b>, reward and recognize, audits, display results</td></tr></table>
+ <h3>Storage by frequency of use (Set in order)</h3>
+ <table><tr><th>Used</th><th>Store</th></tr><tr><td>Hourly</td><td>Within arm's reach</td></tr><tr><td>Every shift</td><td>Within a short walk</td></tr><tr><td>Daily</td><td>Further away</td></tr><tr><td>Monthly</td><td>Department storage</td></tr><tr><td>Annually</td><td>Central or off-site storage</td></tr></table>
+ <p><b>Why 5S?</b> Makes problems visible, eliminates waste, simplifies work, raises productivity, cuts expenses, improves safety, morale and customer perception.</p>
+ <h3>Visual management</h3>
+ <p>Visual cues and controls that <b>make waste obvious, provide information and standardize tasks</b>, giving status at a glance.</p>
+ <table><tr><th>Question</th><th>Visual aids</th></tr>
+ <tr><td>Where</td><td>Labeling, color coding, outlining, directional markers, maps</td></tr>
+ <tr><td>How</td><td>Standardized worksheets, technical guides, job aids, flowcharts</td></tr>
+ <tr><td>When</td><td>Checklists, flowcharts, schedules</td></tr>
+ <tr><td>What</td><td>Visual displays, storyboards, safety guides, A3, performance indicators</td></tr>
+ <tr><td>Who</td><td>Assignment charts, suggestion boards</td></tr>
+ <tr><td>How much</td><td>Metrics, graphs, scorecards, kanban</td></tr></table>`,
+ example:`<b>5S numbers game.</b> Round 1: numbers 1–49 are scattered, and you find few in 30 s. Sort removes the numbers above 49. Set in order puts them in quadrants, and you find many more. Standardize keeps the pattern. Same person, same shift, more output, because the <b>system</b> changed.`,
+ traps:['Order matters: <b>Sort → Set in order → Shine → Standardize → Sustain</b>.','Red tags belong to <b>Sort</b>. Labels and shadow boards belong to <b>Set in order</b>. Owner and checklists belong to <b>Standardize</b>. Audits and gemba walks belong to <b>Sustain</b>.','30 seconds for <b>you</b>, 60 seconds for <b>anyone</b>.','Seiri, Seiton, Seiso, Seiketsu, Shitsuke are in the same order as S1–S5.']},
+
+{id:'map',n:5,icon:'🗺️',title:'Process mapping: flowchart, SIPOC, swim lane, spaghetti',principle:'Step 2 · Map the value stream',time:'15 min',
+ summary:'Levels of detail, the 7 mapping steps, and when to use each map.',
+ intuition:'You can\'t improve what you can\'t see. A map shows the process as it is really done today, not how we think or wish it is done.',
+ analogy:'Like maps at different zoom levels. A satellite view shows the whole value stream (SIPOC, VSM). A city view shows departments (swim lane). Street view shows every turn (flowchart). The spaghetti diagram is the GPS trace of where people actually walked.',
+ formal:`<p><b>Process</b> = a set of conditions or causes working together to bring about a product or service. It is <b>recurrent</b>, affects organizational capability, can be accomplished differently, and involves coordination.</p>
+ <p><b>Three versions</b>: what you think it is, what it actually is (<b>current state</b>), what you would like it to be (future state). Map the current state first.</p>
+ <h3>Levels of detail</h3>
+ <table><tr><th>Level</th><th>Altitude</th><th>Maps</th></tr>
+ <tr><td>Macro / high</td><td>30,000 ft</td><td><b>VSM, SIPOC</b></td></tr>
+ <tr><td>Mini / mid (department)</td><td>10,000 ft</td><td><b>Swim lane</b></td></tr>
+ <tr><td>Micro / low (working level)</td><td>Ground ("weeds")</td><td><b>Process flow diagram</b>, value-added flowchart</td></tr></table>
+ <h3>7 process-mapping steps</h3>
+ <ol><li>Gather your team</li><li>Determine process boundaries/scope</li><li>Determine the steps: <b>go to the gemba</b> and talk to the people who do the work</li><li>Review notes and order steps on a draft (butcher block or flipchart)</li><li>Draw the map (Visio, PowerPoint, Word)</li><li>Confirm at the gemba and get consensus</li><li>Finalize and distribute</li></ol>
+ <h3>The maps</h3>
+ <table><tr><th>Map</th><th>Shows</th><th>Key facts</th></tr>
+ <tr><td><b>Process flow diagram</b></td><td>Process steps with standard symbols</td><td>Most commonly used. Shows decision points, alternate paths and variation. Elements: operations, decisions, delays, storages, handling.</td></tr>
+ <tr><td><b>SIPOC</b></td><td>Steps plus upstream and downstream elements</td><td>Suppliers (who feeds in), Inputs (what is provided/required), Process, Outputs (what it produces), Customers (who receives/benefits). Plus <b>Requirements</b>.</td></tr>
+ <tr><td><b>Swim lane</b></td><td>Sub-processes, departments or responsibilities in rows/columns</td><td>Also called a <b>cross-functional diagram</b>. Shows parallel tasks and <b>hand-offs</b>. Same symbols as a flowchart.</td></tr>
+ <tr><td><b>Spaghetti diagram</b></td><td>The physical path of a person and/or object in an area</td><td>Highlights <b>motion and transportation</b> waste. Use different colors per item, measure distance, look for confusing routes, backtracks and crossings. Redraw after re-layout.</td></tr></table>`,
+ example:`<b>OR case.</b> A SIPOC lists the suppliers (sterile processing, pharmacy), inputs (trays, drugs, consent), the process (check-in → prep → anesthesia → surgery → recovery → turnover), outputs (completed procedure, clean OR) and customers (patient, recovery unit, next case). A swim lane with lanes for patient, nurse, surgeon, anesthesiologist and OR shows where hand-offs cause delay. A spaghetti diagram traces the nurse walking between the table, the instrument tray and sterilization.`,
+ traps:['SIPOC and VSM = <b>macro, 30,000 ft</b>. Swim lane = <b>10,000 ft</b>. Flowchart = <b>ground level</b>.','Spaghetti diagram → <b>motion & transportation</b> waste.','Swim lane = <b>cross-functional</b> diagram; its specialty is <b>hand-offs</b>.','Map the <b>current state</b> (as actually done), confirmed at the gemba.']},
+
+{id:'vsm',n:6,icon:'🌊',title:'Value stream mapping & value analysis',principle:'Step 2 · Map the value stream',time:'15 min',
+ summary:'VSM, lead time vs cycle time vs takt time, WIP, days of inventory, % value-added, and current/future/ideal state.',
+ intuition:'A VSM is the bird\'s-eye view of material and information flowing from the request to delivery, with the clock running. Most of the clock is waiting, not working.',
+ analogy:'Like tracking a package. Cycle time is the time a truck actually drives it. Lead time is the whole order-to-doorstep time. Most of that time the package sits in warehouses (WIP).',
+ formal:`<ul><li><b>Value stream</b> = the complete sequence of activities required to produce and deliver the end product or service.</li>
+ <li><b>VSM</b> shows the flow of <b>materials and information</b>, and includes takt time, inventory levels, changeover times and staffing. It maps VA, NVA and necessary NVA, at the <b>30,000 ft level</b>, focused on <b>improving the whole process, not optimizing parts</b>.</li>
+ <li><b>Current state VSM</b>: the baseline "facts". Is it done well (waste)? Within the time needed (takt)? How long does the whole thing take (lead time)?</li></ul>
+ <div class="formula">Lead time (throughput time) = time from order to delivery<br>Cycle time (process time) = time to complete one cycle of a process<br>Takt time = available work time ÷ customer demand<br>Days of inventory = inventory ÷ daily demand<br>% value-added = VA time ÷ lead time</div>
+ <ul><li><b>WIP</b> = items in process but not finished. Excess WIP signals delays, waste or imbalance. Ideal WIP aligns with customer demand.</li>
+ <li><b>Future state</b> = how things can, should or will work, with waste removed and flow improved. <b>Ideal state</b> = how it would work under perfect circumstances.</li>
+ <li><b>Value analysis</b> = assess each step and decide if it adds value from the customer's perspective. It reduces cost, improves productivity and shortens lead time.</li></ul>
+ <p>Documentation checklist: hand-offs, steps, push/pull, information flow, performance metrics, crew size, task time per step, volume and WIP at each step, transportation.</p>`,
+ example:`<b>Worked example 1 (slide).</b> Inventory is 4,600 L + 2,400 R = 7,000 pcs. Demand is 18,400 pcs/mo ÷ 20 days = 920 pcs/day. Days of inventory = 7,000 ÷ 920 = <b>7.6 days</b>.<br><br>
+ <b>Worked example 2 (OR VSM case).</b> Wait times are 5+5+2+5+5+5 = 27 min. Cycle times are 15+30+10+60+10+20 = 145 min. Lead time = 27 + 145 = <b>172 min</b>.`,
+ traps:['<b>Lead time</b> = whole order-to-delivery including waits. <b>Cycle time</b> = one pass of a process. <b>Takt</b> = demand pace. Don\'t swap them.','VSM is <b>big picture</b>; it is not a detailed step map.','VSM shows <b>material AND information</b> flow; that is what sets it apart from other maps.']},
+
+{id:'flow',n:7,icon:'⏱️',title:'Takt time & flow',principle:'Step 3 · Create flow',time:'15 min',
+ summary:'Calculating takt, demand changes, % value-added, one-piece flow and its limits.',
+ intuition:'Takt is the heartbeat of demand: how often a finished unit must come out to match what customers buy. Flow means work moves through without stopping.',
+ analogy:'"Takt" is German for a conductor\'s baton. The customer is the conductor setting the tempo, and every process should play at that beat. Not faster (overproduction), not slower (late).',
+ formal:`<div class="formula">Takt time = Available work time ÷ Customer demand<br>Production rate = Demand ÷ Available time  (takt is its inverse)</div>
+ <ul><li><b>Available work time excludes</b> contractual breaks, lunch, team meetings and clean-up.</li>
+ <li>Demand ↓ for an extended period → <b>takt ↑</b> (adjust staffing). Demand ↑ → <b>takt ↓</b>.</li>
+ <li>The operators' <b>cycle times should match takt</b>. Produce to takt with the right number of people. Imbalances drive just-in-case inventory.</li>
+ <li><b>System cycle time</b> = cycle time of the <b>longest task</b> (the bottleneck).</li></ul>
+ <h3>Flow</h3>
+ <ul><li>Flow = moving products or services in a steady, continuous stream, with <b>no barriers, delays or impediments</b>. Flow increases when waste is eliminated.</li>
+ <li>Benefits: quality, productivity, space, lead time, morale, cost.</li>
+ <li><b>One-piece flow</b> (single-piece / continuous flow): work on one unit at a time, with <b>no WIP between steps</b>. It is the Lean ideal.</li>
+ <li>One-piece flow is <b>not always possible</b> with: shared processes across value streams, different changeover times, varying cycle times, excessive downtime, high scrap or rework.</li></ul>`,
+ example:`<b>A. Shift takt (slide).</b> 480 min − 30 break − 10 wash − 0 clean-up − 5 meeting = 435 min = 26,100 s. 26,100 ÷ 55 pcs = <b>474 s/piece</b>.<br>
+ <b>B.</b> 40 h ÷ 100 units = 0.4 h = <b>24 min</b>. Production rate = 100 ÷ 40 = 2.5 units/h.<br>
+ <b>C. Clinic.</b> Check-in 3, wait 15, move 2, nurse 5, wait 15, physician 20, wait 15. Lead time = <b>75 min</b>. System cycle time = longest task = <b>20 min</b>. VA = nurse 5 + physician 20 = 25. %VA = 25/75 = <b>33%</b>. Check-in = necessary NVA.<br>
+ <b>D. OR case.</b> (10 h × 60 − 60) = 540 min/day per OR × 5 ORs = 2,700 min ÷ 40 surgeries = <b>67.5 min</b>.`,
+ traps:['Subtract breaks, lunch, meetings and clean-up <b>before</b> dividing.','Watch units: convert hours → minutes → seconds when the answer asks for seconds.','Demand down = takt <b>up</b>; it\'s an inverse relationship.','Takt ≠ cycle time. Takt comes from the customer; cycle time comes from the process.']},
+
+{id:'rca',n:8,icon:'🔍',title:'Root cause, 5 Whys & PDCA',principle:'Step 3 · Create flow',time:'14 min',
+ summary:'Root cause analysis, the 5 Whys (Jefferson Memorial and OR cases), and the 8 PDCA steps.',
+ intuition:'Fix the cause, not the symptom. Keep asking "why?" until you reach something you can change that stops the problem coming back.',
+ analogy:'A leaky ceiling. Mopping the floor treats the symptom. Asking why five times takes you to the cracked flashing on the roof.',
+ formal:`<ul><li><b>Root cause</b> = the fundamental cause of a problem, error or defect. RCA identifies the underlying cause(s) rather than treating symptoms, prevents recurrence and eliminates waste at the source.</li>
+ <li><b>5 Whys</b>: an iterative "why?" technique. Why 5? Empirical evidence says it takes <b>about 5 on average</b>; it can be more or fewer, so ask until you reach the true root cause.</li></ul>
+ <h3>PDCA (Plan-Do-Check-Act), 8 steps</h3>
+ <table><tr><th>Phase</th><th>Steps</th></tr>
+ <tr><td><b>Plan</b></td><td>1 Clarify the problem (problem statement) · 2 Break down the problem (current state) · 3 Set a target · 4 Find and analyze the root cause · 5 Develop countermeasures</td></tr>
+ <tr><td><b>Do</b></td><td>6 Implement countermeasures (monitor scope, schedule, budget)</td></tr>
+ <tr><td><b>Check</b></td><td>7 Evaluate results: planned vs actual. Return to step 5 if needed</td></tr>
+ <tr><td><b>Act</b></td><td>8 Standardize success; share lessons learned</td></tr></table>
+ <p>PDCA works for all organizations and levels, adapts as learning occurs, and counters the human urge to jump straight to solutions. "You can have PDCA without Lean, but can't have Lean without PDCA" (Mark Graban).</p>
+ <p>Lean tools for finding root causes of waste: VSM (bottlenecks, delays, inventory), value analysis (root cause of NVA), takt (causes of overproduction, WIP, idle time).</p>`,
+ example:`<b>Jefferson Memorial.</b> It deteriorates faster → washed more → more bird droppings → more birds → more spiders → more insects at dusk → <b>the lights attract them</b>. The fix was turning the lights on 1 hour later, giving 90% fewer droppings.<br><br>
+ <b>OR case.</b> Surgeries exceed takt of 67.5 min → tool prep delays → sterilization slow → backlog from limited equipment → sterilization team not told in advance → <b>root cause: poor communication and scheduling between the surgical and sterilization teams</b>. In PDCA: <b>Plan</b> a tool-scheduling and notification system, <b>Do</b> a pilot in one OR for a week, <b>Check</b> cycle time vs takt and on-time trays, <b>Act</b> by standardizing across all ORs.`,
+ traps:['Five is an <b>average</b>, not a rule.','Countermeasures are developed in <b>Plan</b> (step 5); implementing is <b>Do</b>.','Check compares <b>planned vs actual</b>; Act <b>standardizes</b>.','A pilot in one OR = <b>Do</b>. Rolling out to all ORs = <b>Act</b>.']},
+
+{id:'pull',n:9,icon:'🧲',title:'Push, pull, kanban & supermarkets',principle:'Step 4 · Establish pull',time:'14 min',
+ summary:'Push vs pull, kanban signals, supermarket vs sequential pull, withdrawal vs production kanban, FIFO and heijunka.',
+ intuition:'Push makes stuff because a forecast said so. Pull makes stuff because a customer just used one. Pull replaces only what was consumed.',
+ analogy:'A grocery shelf is a supermarket pull. When you take milk, a stocker refills that spot. A custom sandwich shop is a sequential pull: made to order, first in first out.',
+ formal:`<table><tr><th>Push</th><th>Pull (Lean ideal)</th></tr>
+ <tr><td>Each operation independent; schedules from a <b>forecast</b></td><td>Each operation part of one process; work based on <b>consumption</b></td></tr>
+ <tr><td>Complex, expensive scheduling systems; expediting needed</td><td>Simple planning; expediting rarely needed</td></tr>
+ <tr><td>Large lots, high inventory, problems hidden, poor communication</td><td>Small lots, lower inventory, problems visible, good communication</td></tr>
+ <tr><td>"Make all we can just in case"</td><td>"Make what we need when we need it" (JIT)</td></tr>
+ <tr><td>ED patients sent to units before they're ready; stocking closets by prediction</td><td>As one patient leaves the OR, the next is ready</td></tr></table>
+ <ul><li><b>Pull system</b> = customer-controlled, uses <b>signals</b> to authorize work; replaces what was consumed. <b>JIT</b>: what is needed, when needed, in the quantity needed.</li>
+ <li><b>Kanban</b> = "signal" or "card". A visual cue for <b>when</b> to order, <b>from whom</b> and <b>what quantity</b>. Physical or electronic. Controls WIP; aligns WIP with demand.</li>
+ <li><b>Withdrawal kanban</b> authorizes <b>movement</b> of parts. <b>Production kanban</b> authorizes <b>production</b> of parts.</li></ul>
+ <table><tr><th></th><th>Supermarket pull</th><th>Sequential pull</th></tr>
+ <tr><td>Also called</td><td>Fill-up, replenishment, <b>A-type</b></td><td>Make-to-order</td></tr>
+ <tr><td>Demand</td><td><b>Unknown</b>: stock held on hand</td><td><b>Known</b>: made on a schedule</td></tr>
+ <tr><td>How</td><td>Downstream takes from the store; a kanban goes upstream; upstream replaces what was taken</td><td>Scheduling sets quantity and mix; kanban cards go in a <b>heijunka box</b>; strict <b>FIFO</b></td></tr>
+ <tr><td>Pros</td><td>Ready to ship on short notice</td><td>Less inventory and waste</td></tr>
+ <tr><td>Cons</td><td>Needs space and inventory for every product</td><td>Needs high stability, short predictable lead times, strong management</td></tr></table>
+ <p>A mixed supermarket + sequential system can be used selectively. In pull, products flow <b>FIFO</b> (oldest queued first); one-piece flow is the ideal.</p>`,
+ example:`<b>Supply closet.</b> Two bins of IV start kits. When bin 1 empties, its card goes to the materials room, which is a withdrawal signal to move a bin. Materials then signals the supplier (production) to replace exactly one bin. Nothing is ordered "just in case".`,
+ traps:['Supermarket = <b>unknown demand</b>, inventory on hand. Sequential = <b>known demand</b>, made to schedule.','Withdrawal = <b>move</b>; production = <b>make</b>.','Heijunka box goes with <b>sequential</b> pull.','Push schedules come from a <b>forecast</b>.']},
+
+{id:'std',n:10,icon:'⚙️',title:'Standard work, SMED & TPM/OEE',principle:'Step 4 · Establish pull',time:'15 min',
+ summary:'The one best way, quick changeover (internal vs external), and OEE = A × P × Q.',
+ intuition:'Standardize the current best way so everyone does it the same, which makes problems and improvements measurable. Make changeovers fast, and keep machines ready and reliable.',
+ analogy:'A Formula 1 pit stop. The crew has standard work (each person one job). Tires and fuel are staged before the car arrives (external setup), so the car stops for only about 2 seconds (internal setup).',
+ formal:`<h3>Standard work</h3>
+ <ul><li>The <b>current, one best way</b> to complete an activity <b>safely</b>, with the proper outcome and the highest quality. It is the best, safest and easiest way.</li>
+ <li>A documented record that <b>all employees on all shifts</b> follow. The best combination of people and equipment, using the minimum labor, space, inventory and equipment for a given level of demand (takt).</li>
+ <li>Reduces variation; focuses on the <b>employee process</b>, not equipment or materials. Document: who, tasks, cycle time, skills, process capability, a map of where the work is done.</li>
+ <li><b>Job instruction sheet</b>: the steps of the job, used for training and reconfirming. <b>Standard work chart</b>: movement, material location and layout, including <b>takt, cycle time, work sequence and standard WIP</b>.</li>
+ <li>"You cannot have improvement without standardization" (Tom Zidel).</li></ul>
+ <h3>SMED / SUR / changeover</h3>
+ <ul><li>Single-Minute Exchange of Dies, also called <b>quick changeover</b> or <b>setup reduction (SUR)</b>. Minimizes the time from finishing one product or service to getting ready for the next (clean-up, set-up, start-up).</li>
+ <li>Toyota cut changeovers from hours to <b>9 minutes or less (single-digit minutes)</b>.</li>
+ <li><b>Internal</b> = done while the machine is <b>shut down</b>. <b>External</b> = done while the equipment is <b>running</b>. <b>Objective: move internal to external, and improve both.</b></li>
+ <li>Steps: measure a baseline → eliminate non-essential tasks and movement → classify internal/external → convert internal to external → simplify internal → stage supplies at <b>point of use</b> → streamline → measure again.</li></ul>
+ <h3>TPM (Total Productive Maintenance)</h3>
+ <div class="formula">OEE = Availability × Performance × Quality<br>Availability = operating time ÷ planned time<br>Performance = (ideal cycle time × total output) ÷ operating time<br>Quality = good output ÷ total output<br>World-class OEE ≈ 85%</div>
+ <ul><li><b>Equipment management</b>: a team effort (operators, maintenance, engineers, supervisors).</li>
+ <li><b>Preventive and predictive maintenance</b>: planned replacement of worn parts, using technology.</li>
+ <li><b>Autonomous maintenance</b>: <b>operators</b> are responsible for upkeep and call specialists only for skills they lack.</li></ul>`,
+ example:`<b>OR changeover case (40 min today).</b> Must be <b>internal</b> (OR empty): 1 remove instruments (5), 2 clean and disinfect (10), 4 biohazard disposal (3) = <b>18 min</b>. Can be <b>external</b>: 3 restock (5), 5 test anesthesia equipment (5), 6 verify patient documents (4), 7 pre-arrange instruments (5), 8 refill cleaning supplies (3) = 22 min. Changeover drops from <b>40 → 18 min</b>.<br><br>
+ <b>OEE case (anesthesia machine).</b> Availability = 540/600 = 90%. Performance = (60 × 8)/480 = 100%. Quality = 7/8 = 87.5%. OEE = 0.90 × 1.00 × 0.875 = <b>78.75%</b>, below the 85% world-class level. <i>Note: the slide shows 540 min on the availability slide and 480 min on the performance slide. If your instructor uses 540 for performance, P = 88.9% and OEE = 70%. Check the class answer key.</i>`,
+ traps:['<b>Internal = machine stopped</b>; <b>external = machine running</b>.','OEE <b>multiplies</b> the three factors; it does not average them.','<b>85%</b> = world-class OEE.','Autonomous maintenance = <b>operators</b> maintain their own equipment.','Standard work is "current" best. It will improve, so it isn\'t permanent.']},
+
+{id:'perf',n:11,icon:'🏆',title:'Seek perfection: future VSM, poka yoke, kaizen, A3, change',principle:'Step 5 · Seek perfection',time:'18 min',
+ summary:'Future/ideal state, mistake-proofing, the visual workplace and andon, kaizen vs kaikaku, A3, change management, and how the methods compare.',
+ intuition:'Improvement never ends. Design the better future, mistake-proof it, make status visible, improve a little every day, and bring the people along.',
+ analogy:'A USB-C plug fits only the right port (poka yoke). A traffic light is an andon. Brushing your teeth daily is kaizen. A full kitchen remodel in one month is kaikaku.',
+ formal:`<h3>Future state VSM</h3><p>Review the current state, choose the best solutions, estimate impact, and <b>prioritize improvements through a pilot</b>. Questions to ask: customer requirements, where continuous flow is possible, the single point of scheduling, how to level load and mix (heijunka), make-to-order vs finished goods, and the management timeframe. Moves: eliminate NVA, reduce steps, hand-offs, approvals and batching, co-locate by flow, standard work, an organized workplace.</p>
+ <h3>Poka yoke (error/mistake proofing)</h3><ul><li><b>Poka</b> = an inadvertent mistake anyone can make. <b>Yoke</b> = to prevent or proof.</li>
+ <li>Focus on the <b>error, not the employee</b>. Errors come mostly from the <b>system</b>.</li>
+ <li>3 tenets: make it <b>difficult to make</b> a mistake, <b>easy to identify</b> one, and <b>easy to fix</b> it.</li>
+ <li>Approaches: <b>forced control</b> devices, and <b>warning and sensory alerts</b>. Use with root-cause tools like the 5 Whys.</li>
+ <li>Examples: different fuel nozzle sizes (diesel vs unleaded), different-size connectors.</li></ul>
+ <h3>Visual workplace</h3><p>Anyone can walk in and understand the current situation (<b>self-explaining</b>), the work process (<b>self-ordering</b>), whether they are ahead or behind schedule (<b>self-regulating</b>), and when there is an abnormality (<b>self-improving</b>). <b>Andon</b> = a visual status light: normal / warning / stopped.</p>
+ <h3>Kaizen</h3><ul><li><b>Kai</b> = change, <b>Zen</b> = good, for the better. <b>Small, incremental</b> improvement; a philosophy of continuous improvement that empowers front-line staff and uses group consensus.</li>
+ <li><b>Kaikaku</b> = <b>radical</b> improvement in a limited time (1 week to 3 months).</li>
+ <li><b>Kaizen event</b> (kaizen workshop, rapid continuous improvement, kaizen blitz): typically <b>one week</b>. Phase 1 prepare (scope, objectives, preliminary current-state map, documents). Phase 2 conduct. Phase 3 after (review action items and metrics, more opportunities).</li></ul>
+ <h3>A3</h3><p>A structured problem-solving and reporting tool on <b>one side of 11×17 paper</b> (A3 size), following <b>PDCA</b>. Used for root-cause problem solving, communication, tracking CI and finding improvement areas. Case flow: problem statement → current state → root cause → target state → countermeasures → implementation plan → metrics → follow-up → document and share.</p>
+ <h3>Change management</h3><ul><li>Even the best solutions fail without adoption. Key concepts: <b>awareness &amp; alignment</b> (the "why"), <b>leadership &amp; sponsorship</b>, <b>stakeholder engagement</b>, <b>communication</b> (two-way), <b>training &amp; support</b>, <b>resistance management</b>, <b>sustainment</b>.</li>
+ <li>Requirements for change: vision/mission/purpose, leadership, people (<b>WIIFM</b> = what's in it for me, plus skills), processes &amp; resources, plan &amp; program.</li>
+ <li>Lean management: managers <b>coach and empower</b>, with two-way communication and shared responsibility.</li>
+ <li>Roles: the senior team designs value in and creates flow. Middle management takes waste out and improves flow. The workforce keeps waste out and sustains flow (solve, standardize, improve).</li></ul>
+ <h3>Problem-solving approaches compared</h3>
+ <table><tr><th>PDCA</th><th>DMAIC</th><th>A3</th><th>8D</th></tr>
+ <tr><td>Plan</td><td>Define, Measure, Analyze</td><td>Clarify → break down → target → root cause → countermeasures</td><td>1 Team · 2 Describe · 3 Containment · 4 Root cause · 5 Corrective actions</td></tr>
+ <tr><td>Do</td><td>Improve</td><td>Implement countermeasures</td><td>6 Implement</td></tr>
+ <tr><td>Check</td><td>Control</td><td>Evaluate results</td><td>7 Prevent recurrence</td></tr>
+ <tr><td>Act</td><td>Control</td><td>Standardize success</td><td>8 Congratulate team</td></tr></table>
+ <p><b>Lean vs Six Sigma</b>. Similarities: customer focus, shared diagnostic tools for defects and root causes, statistics. Difference: Six Sigma uses <b>control charts extensively</b>.</p>`,
+ example:`<b>OR A3.</b> Problem: surgeries exceed the 67.5 min takt. Current state: VSM shows 27 min of waiting. Root cause: no advance tool requests to sterile processing. Target: cycle time ≤ takt and 98% on-time trays. Countermeasure: a tool-scheduling notification plus pre-staged case carts (SMED external). Plan: pilot OR 3 for one week. Metrics: cycle time, on-time trays, turnover. Follow-up: standardize and audit monthly.`,
+ traps:['Kaizen = <b>small, incremental</b>; kaikaku = <b>radical, short timeframe</b>.','A3 follows <b>PDCA</b>; it is one page on 11×17 paper.','Poka yoke blames the <b>system</b>, never the person.','Kaizen event ≈ <b>one week</b>.','Control charts = the <b>Six Sigma</b> differentiator.']}
+];
+
+/* Questions: [topic, question, options[], correctIndex, explanation] */
+const Q=[
+['found','Lean focuses primarily on which two things?',['Reducing variation and using control charts','Reducing waste while respecting people','Maximizing machine utilization and output','Inspection and rework'],1,'Lean = waste reduction + respect for people. Variation reduction is Six Sigma\'s focus.'],
+['found','Six Sigma primarily focuses on improving quality by:',['Eliminating the 8 wastes','Minimizing process variability using data and statistics','Creating pull systems','Organizing the workplace'],1,'Six Sigma uses rigorous data analytics and statistical tools to minimize variability.'],
+['found','Which belt level is associated with project leadership?',['Yellow Belt','Green Belt','Black Belt','White Belt'],1,'Yellow = basic knowledge, Green = project leadership, Black = mentors for multiple projects and Green Belts.'],
+['found','Black Belts are best described as:',['Practitioners with basic knowledge','Mentors for multiple projects and Green Belts','Front-line operators','Executive sponsors only'],1,'Per the course, Black Belts mentor multiple projects and Green Belts.'],
+['found','Lean is inspired by which system?',['Ford Mass Production System','Toyota Production System (TPS)','Six Sigma DMAIC','ISO 9001'],1,'Lean describes the Toyota Production System.'],
+['found','Who coined the term "Lean" in a 1988 article?',['Taiichi Ohno','W. Edwards Deming','John Krafcik','Shigeo Shingo'],2,'John Krafcik, "Triumph of the Lean Production System" (1988).'],
+['found','W. Edwards Deming is credited with developing:',['Interchangeable parts','The Plan-Do-Study-Act cycle and statistical quality control','The assembly line','Motion studies in healthcare'],1,'Deming (1940s–50s): PDSA cycle and statistical quality control.'],
+['found','Frank and Lillian Gilbreth used process charts and motion studies to improve:',['Automobile assembly','Healthcare','Textile mills','Railroads'],1,'The Gilbreths applied process charts and motion studies to healthcare (~1915).'],
+['found','Which is the correct order of the 5 Lean principles?',['Map value stream → Identify value → Pull → Flow → Perfection','Identify value → Map value stream → Create flow → Establish pull → Seek perfection','Identify value → Create flow → Map value stream → Seek perfection → Establish pull','Create flow → Establish pull → Identify value → Map value stream → Seek perfection'],1,'Value → Value stream → Flow → Pull → Perfection.'],
+['found','The Shingo Model was named after:',['Taiichi Ohno','Shigeo Shingo, a pioneer of Lean and TPS','Henry Ford','Eli Whitney'],1,'Named after Shigeo Shingo; developed by the Shingo Institute.'],
+['found','Which is NOT one of the Shingo Model\'s four dimensions of alignment?',['Cultural enablers','Continuous improvement','Enterprise alignment','Statistical control'],3,'The four dimensions: cultural enablers, continuous improvement, enterprise alignment, results.'],
+['found','"Assure quality at the source" in the Shingo Model means:',['Inspect every product at the end','Prevent defects where they originate rather than detecting them later','Outsource quality to suppliers','Use more inspectors'],1,'Prevent defects at the source instead of detecting them later.'],
+['found','The 3 Cs of the entrepreneurial mindset are:',['Cost, Cycle, Customer','Curiosity, Connections, Creating value','Control, Check, Correct','Culture, Commitment, Communication'],1,'KEEN 3 Cs: Curiosity, Connections, Creating value.'],
+['found','Why are many Lean terms in Japanese?',['Japanese is the official ISO language','Lean originated from the Toyota Production System in Japan','They sound more professional','Shingo required it'],1,'Lean grew out of TPS at Toyota in Japan.'],
+['found','Before spreading to healthcare and services, Lean was primarily used in:',['Software','Manufacturing','Retail banking','Agriculture'],1,'Lean was used mainly in manufacturing before other fields adopted it.'],
+['found','Frederick Taylor (1911) is best known for:',['Applying scientific principles to management and work','Coining the term Lean','The PDCA cycle','Kanban'],0,'Taylor applied scientific principles to management and work processes.'],
+
+['value','Who determines value in a process?',['The process owner','Senior management','The customer','The Green Belt'],2,'The customer defines value.'],
+['value','Which is NOT a criterion for a value-added activity?',['The customer is willing to pay for it','It transforms the product in some way','It is done right the first time','It is required by regulation'],3,'Required-by-regulation steps are necessary non-value-added (value-enabling).'],
+['value','Necessary non-value-added activities should be:',['Eliminated completely','Minimized in time','Expanded to ensure compliance','Ignored'],1,'They are required (law, safety) so they cannot be eliminated, but their time should be minimized.'],
+['value','A sterilization documentation step required by law is classified as:',['Value-added','Unnecessary non-value-added','Necessary non-value-added','Overproduction'],2,'Not valued by the customer but required by regulation, so it is necessary NVA.'],
+['value','Typically, what share of the steps, time and cost in a process is waste?',['Less than 10%','About 25%','More than 50%','Exactly 85%'],2,'The course states more than 50% is typically waste.'],
+['value','Internal customers are:',['People who buy your products','Individuals or departments in your organization who rely on your work','Regulators','Suppliers'],1,'Internal customers are inside the organization and depend on your output.'],
+['value','The key question for identifying the customer is:',['Who pays the most?','Who benefits from the process?','Who complains the most?','Who designed the process?'],1,'"Who benefits from the process?"'],
+['value','Which is NOT a key component of VOC?',['Customer needs','Customer preferences','Pain points','Machine cycle times'],3,'VOC components: needs, preferences, pain points.'],
+['value','Which VOC method uses in-depth, one-on-one conversations?',['Surveys','Interviews','Focus groups','Observation'],1,'Interviews explore needs in detail, one on one.'],
+['value','Watching how customers interact with a service in real time is called:',['Focus group','Observation','Survey','Complaint analysis'],1,'Observation.'],
+['value','What is the primary goal of gathering VOC for a Lean project?',['To reduce headcount','To identify what is valuable to the customer','To create control charts','To set supplier prices'],1,'VOC identifies what provides value to the customer.'],
+['value','On a power-interest grid, a stakeholder with HIGH power and HIGH interest should be:',['Monitored with minimum effort','Kept informed','Kept satisfied','Managed closely'],3,'High/high → manage closely.'],
+['value','On a power-interest grid, a stakeholder with LOW power and HIGH interest should be:',['Managed closely','Kept informed','Kept satisfied','Ignored'],1,'Low power, high interest → keep informed.'],
+['value','On a power-interest grid, HIGH power but LOW interest calls for:',['Keep satisfied','Keep informed','Manage closely','Monitor'],0,'High power, low interest → keep satisfied.'],
+['value','Suppliers and regulators are given as examples of which stakeholder type?',['Primary','Secondary','Key','Internal'],1,'Secondary stakeholders are indirectly affected (suppliers, regulators).'],
+['value','Senior management with significant influence over project success are which stakeholder type?',['Secondary','Key','External','Passive'],1,'Key stakeholders have significant influence over success or failure.'],
+['value','Partnering with key stakeholders through cross-functional teams is which engagement strategy?',['Inform','Consult','Collaborate','Monitor'],2,'Collaborate = partner to drive improvements (cross-functional teams).'],
+['value','Sending newsletters and progress reports is which engagement strategy?',['Inform','Consult','Collaborate','Monitor'],0,'Inform = keep stakeholders updated.'],
+['value','Holding workshops so stakeholders help solve problems is which engagement strategy?',['Inform','Consult','Collaborate','Monitor'],1,'Consult = involve them in decision-making and problem-solving (focus groups, workshops).'],
+['value','The power-interest grid helps a Lean project team determine:',['Takt time','How to prioritize and manage stakeholders','Inventory levels','Root cause'],1,'It shows which stakeholders to focus on and how to manage their expectations.'],
+['value','What do employees typically expect from a Lean project?',['ROI and cost savings','Job stability, streamlined processes and reduced workload','Consistent demand','Lower prices'],1,'Per the slides: job stability, streamlined processes, reduced workload.'],
+
+['waste','The Japanese term for waste is:',['Kaizen','Muda','Poka','Gemba'],1,'Muda = futility, uselessness, wastefulness.'],
+['waste','Which waste is considered the greatest according to Toyota?',['Defects','Inventory','Overproduction','Motion'],2,'Overproduction is the greatest waste because it creates others.'],
+['waste','Producing more than needed OR sooner than needed is:',['Inventory','Overproduction','Excess processing','Waiting'],1,'Overproduction includes producing too early.'],
+['waste','Excess materials or products not immediately needed are which waste?',['Overproduction','Inventory','Transportation','Defect'],1,'Inventory = more on hand than needed right now.'],
+['waste','A nurse walking back and forth searching for supplies is an example of:',['Transportation','Motion','Waiting','Inventory'],1,'Motion = wasted movement of people.'],
+['waste','Moving inventory multiple times between storage locations is:',['Motion','Transportation','Overproduction','Excess processing'],1,'Transportation = unnecessary movement of materials or objects.'],
+['waste','Re-entering the same data into multiple systems is:',['Defect','Excess processing','Motion','Waiting'],1,'Extra steps the customer doesn\'t value.'],
+['waste','Not including front-line staff in improvement projects is:',['Neglected talent','Waiting','Defect','Overproduction'],0,'Neglected talent = losing ideas and skills by not engaging people.'],
+['waste','Which waste was NOT one of the original seven wastes?',['Motion','Inventory','Neglected talent','Waiting'],2,'Neglected talent was added later.'],
+['waste','A wrong lab test ordered for a patient is which waste?',['Defect','Excess processing','Overproduction','Motion'],0,'Errors needing extra time, resources or money to fix are defects.'],
+['waste','A patient sitting in the waiting room for 40 minutes represents:',['Inventory','Waiting','Motion','Neglected talent'],1,'Idle time when people or information aren\'t ready.'],
+['waste','Over-inspecting products that already meet requirements is:',['Defect','Excess processing','Overproduction','Inventory'],1,'Over-inspection = excess processing.'],
+['waste','Which mnemonic is NOT mentioned for the wastes?',['DOWNTIME','TIM WOOD','TRIM WOOD','SMART'],3,'DOWNTIME, TIM WOOD, TIM U WOOD and TRIM WOOD are the mnemonics.'],
+['waste','Overstaffing a unit relative to demand is classified as:',['Waiting','Overproduction','Neglected talent','Inventory'],1,'The slides list overstaffing under overproduction.'],
+['waste','Centralized storage that forces items to be carried long distances is mainly:',['Transportation','Motion','Inventory','Defect'],0,'Centralized storage is a transportation example.'],
+['waste','Micro-managing employees is an example of:',['Defect','Neglected talent','Motion','Excess processing'],1,'Listed under neglected talent.'],
+['waste','Waiting for a machine to complete its cycle is:',['Waiting','Motion','Overproduction','Transportation'],0,'Idle time.'],
+['waste','Taiichi Ohno described TPS as reducing the timeline from order to cash by:',['Adding inspectors','Removing non-value-added wastes','Increasing batch sizes','Automating everything'],1,'"…reducing that time line by removing non-value-added wastes."'],
+
+['s5','What is the correct order of 5S?',['Sort, Shine, Set in order, Sustain, Standardize','Sort, Set in order, Shine, Standardize, Sustain','Set in order, Sort, Shine, Standardize, Sustain','Shine, Sort, Set in order, Standardize, Sustain'],1,'Sort → Set in order → Shine → Standardize → Sustain.'],
+['s5','"Seiri" corresponds to which S?',['Sort','Set in order','Shine','Sustain'],0,'Seiri = Sort.'],
+['s5','"Seiton" corresponds to which S?',['Sort','Set in order','Standardize','Shine'],1,'Seiton = Set in order.'],
+['s5','"Seiso" corresponds to which S?',['Shine','Sustain','Sort','Standardize'],0,'Seiso = Shine.'],
+['s5','"Seiketsu" corresponds to which S?',['Sort','Shine','Standardize','Sustain'],2,'Seiketsu = Standardize.'],
+['s5','"Shitsuke" corresponds to which S?',['Set in order','Standardize','Shine','Sustain'],3,'Shitsuke = Sustain.'],
+['s5','Red tags are used during which S?',['Sort','Set in order','Shine','Sustain'],0,'Red tags mark items neither kept nor thrown away (recycle, storage, donate, repair, other department).'],
+['s5','Under Set in order guidelines, ANYONE should be able to find anything within:',['10 seconds','30 seconds','60 seconds','5 minutes'],2,'You: ≤30 s. Anyone: ≤60 s.'],
+['s5','Under Set in order guidelines, YOU should be able to find anything within:',['30 seconds','60 seconds','2 minutes','10 seconds'],0,'You: 30 seconds or less.'],
+['s5','An item used hourly should be stored:',['In department storage','Within a short walk','Within arm\'s reach','Off-site'],2,'Hourly → within arm\'s reach.'],
+['s5','An item used monthly should be stored:',['Within arm\'s reach','Department storage','Within a short walk','At the workstation'],1,'Monthly → department storage.'],
+['s5','An item used every shift should be stored:',['Within a short walk','Off-site','Department storage','Central storage'],0,'Every shift → within a short walk.'],
+['s5','Designating an owner and using schedules and checklists happens in which S?',['Shine','Standardize','Sort','Set in order'],1,'Standardize maintains the first 3S, with an owner, schedules and checklists.'],
+['s5','Gemba walks, leadership involvement and audits belong to which S?',['Standardize','Sustain','Shine','Sort'],1,'Sustain builds the culture: gemba walks, audits, recognition.'],
+['s5','"Gemba" means:',['Continuous improvement','The actual place where work is done','Signal card','Mistake proofing'],1,'Gemba walk = go to the actual place and observe.'],
+['s5','Labeling locations and setting inventory limits are part of:',['Sort','Set in order','Shine','Sustain'],1,'Set in order: best location, labels, limits, visual controls, nothing on the floor.'],
+['s5','The 5S slogan is:',['Right first time','A place for everything and everything in its place','Make what is needed when needed','Stop and fix'],1,'5S: a place for everything and everything in its place.'],
+['s5','Visual management is the use of visual cues to:',['Replace all training','Make waste obvious, provide information and standardize tasks','Reduce headcount','Forecast demand'],1,'That is the course definition.'],
+['s5','Assignment charts and suggestion boards answer which visual question?',['Where','When','Who','How much'],2,'Who = assignment charts, suggestion boards.'],
+['s5','Metrics, graphs, scorecards and kanban answer which visual question?',['How much','Where','How','What'],0,'How much.'],
+['s5','Labeling, color coding and floor outlining answer which visual question?',['When','Where','Who','How'],1,'Where.'],
+['s5','Which is NOT a stated benefit of 5S?',['Makes problems visible','Creates a safer environment','Increases batch sizes','Improves morale'],2,'Bigger batches are not a 5S benefit.'],
+
+['map','Which process map is the most commonly used?',['Spaghetti diagram','Process flow diagram (flowchart)','VSM','SIPOC'],1,'The process flow diagram is the most common.'],
+['map','SIPOC stands for:',['Suppliers, Inputs, Process, Outputs, Customers','Standards, Inputs, Plan, Outputs, Controls','Suppliers, Inventory, Process, Operations, Cost','Scope, Issues, Process, Owners, Customers'],0,'Suppliers, Inputs, Process, Outputs, Customers (plus requirements).'],
+['map','Which maps are macro / 30,000-foot level?',['Swim lane and spaghetti','VSM and SIPOC','Process flow and value-added flowchart','Job instruction sheet'],1,'Macro level: VSM and SIPOC.'],
+['map','A swim lane diagram is at which level of detail?',['Macro (30,000 ft)','Mini/mid (10,000 ft)','Micro (ground level)','Enterprise'],1,'Swim lanes are mid-level, departmental.'],
+['map','A swim lane diagram is also called a:',['Spaghetti chart','Cross-functional diagram','Fishbone','Control chart'],1,'Cross-functional diagram.'],
+['map','The main strength of a swim lane diagram is showing:',['Physical walking paths','Hand-offs between roles or departments','Inventory days','Takt time'],1,'Swim lanes reveal hand-offs and parallel tasks.'],
+['map','A spaghetti diagram mainly highlights which wastes?',['Defects and overproduction','Motion and transportation','Inventory and waiting','Neglected talent'],1,'Physical movement of people and items.'],
+['map','In a spaghetti diagram analysis, which is NOT a typical problem to look for?',['Confusing routes','Backtracks/loop-backs','Crossing tracks','Control limits'],3,'Control limits are a Six Sigma concept.'],
+['map','When mapping more than one item on a spaghetti diagram you should:',['Use a separate diagram for each','Use different colors','Average the paths','Only map people'],1,'Use different colors to distinguish.'],
+['map','In SIPOC, "Who is upstream feeding the process?" describes:',['Customers','Inputs','Suppliers','Outputs'],2,'Suppliers initiate or feed into the process.'],
+['map','In SIPOC, "What is required for the process to happen?" describes:',['Inputs','Outputs','Process','Customers'],0,'Inputs.'],
+['map','The current state is:',['The process as we wish it were','The process as it is actually done today','The ideal state','The process as documented in the manual'],1,'What is really happening now.'],
+['map','During process mapping, steps should be determined by:',['Reading the procedure manual only','Going to the gemba and talking to the people who do the work','Asking senior management','Guessing'],1,'Step 3: go to the gemba.'],
+['map','Which is the FIRST of the 7 process-mapping steps?',['Draw the map','Gather your team','Determine boundaries','Go to the gemba'],1,'1 Gather team, 2 boundaries/scope, 3 steps (gemba), 4 draft, 5 draw, 6 confirm, 7 finalize.'],
+['map','Which is NOT a characteristic of a process per the course definition?',['Recurrent','Affects organizational capability','Can be accomplished differently','Happens only once'],3,'A process is recurrent.'],
+['map','A process flow diagram shows elements such as:',['Operations, decisions, delays, storages, handling','Suppliers and customers only','Power and interest','OEE'],0,'Those are the flowchart elements.'],
+['map','A micro/low-level map is best represented by:',['SIPOC','VSM','Process flow diagram','Stakeholder map'],2,'Ground level: process flow diagrams, value-added flowcharts.'],
+['map','After redesigning a layout, it is a good idea to:',['Discard the spaghetti diagram','Create a second spaghetti diagram','Only measure takt','Switch to SIPOC'],1,'Redraw to confirm the reduced movement.'],
+
+['vsm','A value stream map shows the flow of:',['Only materials','Only information','Materials and information','Money only'],2,'A VSM shows both material and information flow.'],
+['vsm','Lead time is:',['Time to complete one cycle of a process','Time from when an order is made until it is delivered','Available time ÷ demand','Machine uptime'],1,'Lead (throughput) time = order to delivery.'],
+['vsm','Cycle time is:',['The time to complete one cycle of a process from start to end','Order to delivery time','Demand rate','Changeover time'],0,'Cycle (process) time.'],
+['vsm','Lead time is also known as:',['Process time','Throughput time','Takt time','Setup time'],1,'Lead time = throughput time.'],
+['vsm','Inventory is 7,000 pcs and demand is 920 pcs/day. Days of inventory ≈',['0.13 days','7.6 days','76 days','920 days'],1,'7,000 ÷ 920 ≈ 7.6 days.'],
+['vsm','Demand is 18,400 pcs/month with 20 working days. Daily demand is:',['368','920','1,840','9,200'],1,'18,400 ÷ 20 = 920 pcs/day.'],
+['vsm','VSM focuses on:',['Optimizing individual steps','Improving the whole process, not optimizing parts','Individual employee performance','Detailed keystroke steps'],1,'Big picture: the whole process.'],
+['vsm','Excessive WIP typically indicates:',['Perfect flow','Delays, waste or process imbalance','High customer demand only','Good quality'],1,'Excess WIP signals delays, waste or imbalances.'],
+['vsm','The future state is:',['The current process','The process with waste eliminated and flow improved','A process with more inspection','The historical process'],1,'How things can, should or will work.'],
+['vsm','The ideal state is:',['How things would work under perfect circumstances','The current state with minor fixes','The same as the current state','Only for manufacturing'],0,'A version of the future state under perfect conditions.'],
+['vsm','Value analysis assesses each step to determine:',['Its cost only','Whether it adds value from the customer\'s perspective','Who performs it','Its takt time'],1,'Value analysis distinguishes VA from NVA tasks.'],
+['vsm','Which VSM question asks "how long does the whole process take?"',['Waste','Takt time','Lead time','OEE'],2,'Lead time.'],
+['vsm','A VSM includes data such as:',['Takt time, inventory levels, changeover times and staffing','Only employee names','Stakeholder power','Customer survey text'],0,'VSM data boxes include takt, inventory, changeover and staffing.'],
+['vsm','The OR VSM case has waits of 5+5+2+5+5+5 min and cycle times of 15+30+10+60+10+20 min. The lead time is:',['145 min','27 min','172 min','118 min'],2,'27 + 145 = 172 minutes.'],
+
+['flow','Takt time is calculated as:',['Customer demand ÷ available time','Available work time ÷ customer demand','Cycle time × demand','Lead time − cycle time'],1,'Takt = available time ÷ demand.'],
+['flow','"Takt" is a word from which language?',['Japanese','German','Latin','French'],1,'German, for a conductor\'s baton.'],
+['flow','Available work time for takt should EXCLUDE:',['Productive work time','Breaks, lunch, team meetings and clean-up','Machine run time','Value-added time'],1,'Exclude contractual breaks, lunch, meetings and clean-up.'],
+['flow','A shift has 435 available minutes and demand is 55 pieces. Takt ≈',['7.9 s','474 s','26,100 s','55 s'],1,'435 × 60 = 26,100 s ÷ 55 ≈ 474 s.'],
+['flow','Available time is 40 hours and demand is 100 units. Takt time is:',['2.5 min','24 min','40 min','0.4 min'],1,'40/100 = 0.4 h = 24 min.'],
+['flow','Demand is 100 units in 40 hours. The production rate is:',['0.4 units/h','2.5 units/h','24 units/h','4 units/h'],1,'100/40 = 2.5 units/h; takt is its inverse.'],
+['flow','If customer demand decreases for an extended period, takt time should:',['Decrease','Increase','Stay the same','Be ignored'],1,'Less demand → more time per unit → takt increases.'],
+['flow','If customer demand increases for an extended period, takt time should:',['Increase','Decrease','Stay the same','Double'],1,'More demand → takt decreases.'],
+['flow','Operators\' cycle times should:',['Be as fast as possible regardless of demand','Match takt time','Be twice the takt time','Be ignored'],1,'Cycle times should match takt.'],
+['flow','In the clinic example, the system cycle time equals:',['The sum of all tasks','The cycle time of the longest task','The shortest task','Lead time'],1,'System cycle time = longest task (physician, 20 min).'],
+['flow','Clinic lead time is 75 min with 25 min of value-added time. Percent value-added is:',['25%','33%','67%','75%'],1,'25/75 = 33%.'],
+['flow','In the clinic example, patient check-in is classified as:',['Value-added','Necessary non-value-added','Unnecessary waste','Overproduction'],1,'Check-in is necessary NVA.'],
+['flow','An OR runs 10 h/day with 60 min of breaks and cleaning, 5 ORs, and 40 surgeries/day. Takt time is:',['67.5 min','54 min','75 min','13.5 min'],0,'(600 − 60) × 5 = 2,700 ÷ 40 = 67.5 min.'],
+['flow','One-piece flow means:',['Large batches processed together','Working on one item at a time with no WIP accumulating between steps','One operator per process','One shift per day'],1,'Single-piece/continuous flow, no WIP between steps.'],
+['flow','One-piece flow is NOT always possible when there is/are:',['Short stable cycle times','Excessive machine downtime or high scrap/rework','Low inventory','Co-located steps'],1,'Limits include shared processes, different changeover times, varying cycle times, downtime and scrap/rework.'],
+['flow','Flow is defined as:',['Moving products in a steady, continuous stream without barriers or delays','Producing in large batches','Pushing work by forecast','Inspecting at the end'],0,'Steady continuous stream, no impediments.'],
+['flow','Which is a stated benefit of creating flow?',['Larger inventories','Freed-up floor space','More hand-offs','Longer lead times'],1,'Benefits: quality, productivity, space, lead time, morale, cost.'],
+['flow','Takt time is best described as the:',['Machine speed','Demand rate (the beat of the customer)','Time to change over','Value-added time'],1,'Takt = demand rate.'],
+
+['rca','The purpose of root cause analysis is to:',['Treat symptoms quickly','Identify underlying causes to implement lasting solutions','Assign blame','Speed up inspection'],1,'Find and remove the underlying cause to prevent recurrence.'],
+['rca','Why does the 5 Whys technique use five?',['It is a legal requirement','Empirical evidence shows it takes about 5 on average','Toyota had 5 plants','Five is the maximum allowed'],1,'Five is an empirical average; it can be more or fewer.'],
+['rca','In the Jefferson Memorial example, the root cause was:',['Harsh cleaning chemicals','Lights attracting insects at dusk','Too many tourists','Acid rain'],1,'The lights attracted insects → spiders → birds → droppings → washing.'],
+['rca','The Jefferson Memorial countermeasure was:',['Banning birds','Turning on the lights one hour later','Using softer brushes','Closing at night'],1,'Lights on 1 hour later gave 90% fewer droppings.'],
+['rca','In the OR 5 Whys case, the root cause of long surgeries was:',['Surgeon skill','Lack of communication and scheduling between the surgical and sterilization teams','Too many ORs','Patient lateness'],1,'Sterilization wasn\'t told about tool needs in advance.'],
+['rca','PDCA stands for:',['Plan, Do, Control, Act','Plan, Do, Check, Act','Prepare, Do, Check, Adjust','Plan, Design, Check, Analyze'],1,'Plan-Do-Check-Act.'],
+['rca','In PDCA, "find and analyze the root cause" occurs in which phase?',['Plan','Do','Check','Act'],0,'Plan steps 1–5: clarify, break down, target, root cause, countermeasures.'],
+['rca','In PDCA, developing countermeasures occurs in:',['Plan','Do','Check','Act'],0,'Step 5, still in Plan.'],
+['rca','Evaluating planned vs actual results occurs in:',['Plan','Do','Check','Act'],2,'Check (step 7). Return to step 5 if needed.'],
+['rca','Standardizing a successful improvement and sharing lessons learned is:',['Plan','Do','Check','Act'],3,'Act (step 8).'],
+['rca','Testing a new tool-scheduling system in ONE OR for one week is part of:',['Plan','Do','Check','Act'],1,'A pilot implementation is Do.'],
+['rca','Rolling a successful pilot out to ALL ORs is part of:',['Plan','Do','Check','Act'],3,'Act = standardize the success.'],
+['rca','If the Check phase shows the countermeasure failed, you should:',['Abandon the project','Return to developing countermeasures (step 5)','Skip to Act','Restart from step 1 always'],1,'Return to step 5 if necessary.'],
+['rca','"You can have PDCA without Lean, but can\'t have Lean without PDCA" is attributed to:',['Mark Graban','Taiichi Ohno','Henry Ford','Tom Zidel'],0,'Mark Graban.'],
+['rca','Which is the first step of PDCA\'s Plan phase?',['Set a target','Clarify the problem','Implement countermeasures','Find root cause'],1,'1 Clarify the problem (problem statement and agreement).'],
+['rca','PDCA helps counter which human tendency?',['Over-planning','Jumping straight to solution mode','Asking too many questions','Measuring too much'],1,'It enforces time to plan instead of firefighting.'],
+
+['pull','A push system schedules each operation based on:',['Actual consumption','A forecast','Kanban signals','Customer pull'],1,'Push = forecast-based, independent operations.'],
+['pull','A pull system is:',['Forecast-controlled','Customer-controlled, using signals to authorize work','Driven by batch size','Driven by machine capacity'],1,'Customer-controlled, replenishing what was consumed.'],
+['pull','Just-in-Time (JIT) means:',['Make as much as possible','Make what the customer needs, when needed, in the quantity needed','Make ahead of demand','Hold safety stock'],1,'JIT definition.'],
+['pull','"Kanban" means:',['Waste','Signal or card','Good change','Mistake'],1,'Kanban = signal or card.'],
+['pull','A kanban typically indicates:',['Who to blame','When to order more, from whom and what quantity','Takt time','OEE'],1,'When, from whom, how much.'],
+['pull','A withdrawal kanban authorizes:',['Production of parts','Movement of parts','Inspection','Scrapping'],1,'Withdrawal = movement.'],
+['pull','A production kanban authorizes:',['Movement of parts','Production of parts','Purchasing equipment','Shipping'],1,'Production = make parts.'],
+['pull','A supermarket pull system is also known as:',['B-type pull','Fill-up, replenishment or A-type pull','Sequential pull','Push system'],1,'Fill-up / replenishment / A-type.'],
+['pull','Supermarket pull is best when demand is:',['Known and scheduled','Unknown, so stock is held on hand','Zero','Seasonal only'],1,'Supermarkets hold inventory for unknown demand.'],
+['pull','Sequential pull is best when:',['Not all inventory can be held in a supermarket; products are made to order','Demand is completely unknown','Lead times are long and variable','There is no scheduling department'],0,'Make-to-order, reducing system inventory.'],
+['pull','In a sequential pull system, kanban cards are placed in a:',['Red tag area','Heijunka box','Andon','A3'],1,'Instructions go to the start of the value stream via a heijunka box.'],
+['pull','A con of sequential pull is that it requires:',['Lots of space for every product','High process stability, short lead times and strong management','Large inventories','Forecasting software'],1,'That is its main requirement and drawback.'],
+['pull','A con of supermarket pull is that it requires:',['Space and inventory for each product','No inventory','A heijunka box','FIFO only'],0,'Holding every product needs space and inventory.'],
+['pull','FIFO means:',['Fast in, fast out','First in, first out','Fill in, fill out','Final inspection, final output'],1,'The longest-queued item is addressed first.'],
+['pull','Which is characteristic of a PUSH system?',['Problems visible','Small lots','"Make all we can just in case"','Good communication'],2,'Push: large lots, hidden problems, just-in-case.'],
+['pull','Sending ED patients to inpatient units before the units are ready is an example of:',['Pull','Push','Kanban','One-piece flow'],1,'The slides\' push example.'],
+['pull','"As one patient leaves the OR, another is ready" is an example of:',['Push','Pull','Batching','Overproduction'],1,'The slides\' pull example: even flow without backups.'],
+['pull','Kanban is used to control:',['Employee schedules','WIP and material flow','Stakeholder interest','Customer complaints'],1,'Kanban controls WIP and material flow.'],
+
+['std','Standard work is:',['A permanent rule that never changes','The current one best way to complete an activity safely with the highest quality','Whatever each worker prefers','A management report'],1,'"Current": it improves over time.'],
+['std','Standard work focuses on:',['Equipment and materials','The employee process','Inventory levels','Customer surveys'],1,'It focuses on the employee process.'],
+['std','Which is NOT included on a standard work chart?',['Takt time','Cycle time','Work sequence','Stakeholder power'],3,'It includes takt, cycle time, work sequence and standard WIP.'],
+['std','A job instruction sheet is used to:',['Calculate OEE','Train new employees and help experienced ones reconfirm steps','Show stakeholder interest','Show inventory'],1,'It shows the job steps for training.'],
+['std','"You cannot have improvement without standardization" is attributed to:',['Tom Zidel','Brent James','Mark Graban','Zig Ziglar'],0,'Tom Zidel.'],
+['std','SMED stands for:',['Standard Method for Every Department','Single-Minute Exchange of Dies','Six Methods of Efficient Design','Sequential Material Exchange Delivery'],1,'Single-Minute Exchange of Dies.'],
+['std','SMED is also called:',['Kanban','Quick changeover or setup reduction (SUR)','Heijunka','Jidoka'],1,'Quick changeover / setup reduction / changeover.'],
+['std','In SMED, internal setup is performed while the equipment is:',['Running','Shut down','Being purchased','In storage'],1,'Internal = machine stopped.'],
+['std','In SMED, external setup is performed while the equipment is:',['Running','Shut down','Broken','Being cleaned'],0,'External = equipment running.'],
+['std','The main SMED objective is to:',['Move external to internal','Convert internal steps to external, and improve both','Eliminate all setups','Add inspection'],1,'Move internal to external.'],
+['std','Toyota reduced changeover times from hours to:',['Exactly 1 minute','9 minutes or less (single-digit minutes)','30 minutes','1 hour'],1,'Single-digit minutes.'],
+['std','In the OR changeover case, which task could become EXTERNAL?',['Clean and disinfect the surgical area','Remove used instruments','Prepare and test anesthesia equipment','None of them'],2,'Anesthesia equipment can be tested outside the OR or during the prior case.'],
+['std','OEE equals:',['Availability + Performance + Quality','Availability × Performance × Quality','(A + P + Q)/3','Quality ÷ Availability'],1,'The three factors are multiplied.'],
+['std','World-class OEE is considered:',['50%','70%','85%','100%'],2,'85%.'],
+['std','Availability 90%, Performance 95%, Quality 99%. OEE ≈',['94.7%','84.6%','90%','99%'],1,'0.90 × 0.95 × 0.99 ≈ 0.846.'],
+['std','Planned time is 600 min and the machine is available for 540 min. Availability is:',['111%','90%','54%','10%'],1,'540/600 = 90%.'],
+['std','8 surgeries were done and 7 were good. The quality rate is:',['87.5%','70%','80%','114%'],0,'7/8 = 87.5%.'],
+['std','In TPM, autonomous maintenance means:',['Robots maintain machines','Operators take responsibility for the upkeep of their equipment','Only specialists do maintenance','Equipment is never maintained'],1,'Operators maintain their own equipment and call specialists only when needed.'],
+['std','Using technology to replace worn components on a planned basis is:',['Autonomous maintenance','Preventive and predictive maintenance','Reactive maintenance','Equipment management'],1,'Preventive/predictive maintenance.'],
+['std','TPM primarily focuses on maximizing:',['Inventory','Overall Equipment Effectiveness (OEE)','Batch size','Headcount'],1,'OEE.'],
+
+['perf','Poka yoke means:',['Continuous improvement','Mistake proofing / error proofing','Visual signal','Leveling production'],1,'Poka = inadvertent mistake; yoke = prevent.'],
+['perf','Poka yoke focuses on:',['The employee who made the error','The error itself and the system that allowed it','Punishment','Inspection at the end'],1,'Errors mostly come from the system, not the people.'],
+['perf','Which is NOT one of the three poka yoke tenets?',['Make it difficult to make a mistake','Make it easy to identify a mistake','Make it easy to fix a mistake','Make it easy to blame the operator'],3,'The tenets are: difficult to make, easy to identify, easy to fix.'],
+['perf','Different nozzle sizes for diesel and unleaded fuel are an example of:',['Kanban','Poka yoke','Andon','Kaizen'],1,'A forced-control mistake-proofing device.'],
+['perf','The two approaches to mistake proofing are:',['Push and pull','Forced control devices, and warning/sensory alerts','Internal and external','Kaizen and kaikaku'],1,'Forced control and warnings/sensory alerts.'],
+['perf','Kaizen means:',['Radical change','Change for the better: small, incremental improvement','Signal card','Waste'],1,'Kai = change, Zen = good.'],
+['perf','Kaikaku is:',['Small daily improvement','Radical improvement in a limited time (1 week to 3 months)','A pull signal','A visual light'],1,'Kaikaku = radical change.'],
+['perf','A kaizen event typically lasts:',['One day','About one week','Six months','One year'],1,'Typically a one-week workshop.'],
+['perf','A kaizen event is also called:',['Kaizen blitz, kaizen workshop or rapid continuous improvement','Gemba walk','A3 review','Andon pull'],0,'Those are the alternative names.'],
+['perf','Defining scope, setting objectives and creating a preliminary current-state map happen in which kaizen event phase?',['Phase One: prepare','Phase Two: conduct','Phase Three: after','None'],0,'Preparation.'],
+['perf','Reviewing action items and process metrics after the event happens in:',['Phase One','Phase Two','Phase Three','Phase Zero'],2,'Phase Three: after the kaizen event.'],
+['perf','An A3 report is documented on:',['A whiteboard','One side of an 11 × 17 sheet','A 50-page report','An email'],1,'One side of 11×17 (A3 size).'],
+['perf','The A3 problem-solving format follows which cycle?',['DMAIC','PDCA','8D','SIPOC'],1,'A3 follows PDCA.'],
+['perf','An andon is:',['A visual status signal (normal / warning / stopped)','A type of waste','A storage location','A stakeholder'],0,'A visual management light.'],
+['perf','In a visual workplace, knowing whether you are ahead of or behind schedule is called:',['Self-explaining','Self-ordering','Self-regulating','Self-improving'],2,'Self-regulating.'],
+['perf','In a visual workplace, seeing immediately when there is an abnormality is called:',['Self-improving','Self-regulating','Self-explaining','Self-ordering'],0,'Self-improving.'],
+['perf','WIIFM in change management stands for:',['What Is In Future Management','What\'s In It For Me','Work In Is Flow Managed','Waste Is In Final Material'],1,'People need to know what\'s in it for them.'],
+['perf','"Even the best solutions fail without ___" is the key change-management message.',['Funding','Adoption','Software','Consultants'],1,'Success needs both process improvement and people adoption.'],
+['perf','In Lean management, managers:',['Direct and control','Coach and empower employees with two-way communication','Avoid the front line','Only review reports'],1,'A shift from directing to coaching.'],
+['perf','PDCA\'s "Do" phase corresponds to which DMAIC phase?',['Define','Measure','Improve','Control'],2,'Do ↔ Improve.'],
+['perf','PDCA\'s "Plan" phase covers which DMAIC phases?',['Define, Measure, Analyze','Improve and Control','Only Define','Control'],0,'Plan ↔ Define, Measure, Analyze.'],
+['perf','Which 8D step has no direct PDCA equivalent in the comparison table?',['Implement corrective actions','Define containment activities','Analyze root cause','Describe the problem'],1,'Containment (D3) is special to 8D, though it sits within Plan in the table.'],
+['perf','Which tool is used much more extensively in Six Sigma than in Lean?',['5S','Control charts','Kanban','Spaghetti diagrams'],1,'Control charts are the stated difference.'],
+['perf','When designing the future state VSM, improvements should be prioritized through:',['A pilot','Immediate full rollout','Layoffs','More inspection'],0,'Prioritize improvements through a pilot.'],
+['perf','Which future-state question relates to heijunka?',['How do we level the load and the mix?','Who is the customer?','What is OEE?','Where are the red tags?'],0,'Leveling load and mix = heijunka.'],
+['perf','Under "Everyone has a part to play", middle management is responsible for:',['Designing value in','Taking waste out and improving flow','Only approving budgets','Doing nothing'],1,'Senior: design value in/create flow. Middle: take waste out/improve flow. Workforce: keep waste out/sustain flow.'],
+['perf','Which is a key change management concept per the course?',['Resistance management','Inventory buffering','Overproduction','Batching'],0,'Others: awareness, sponsorship, engagement, communication, training, sustainment.'],
+
+['flow','Root cause analysis, 5 Whys and PDCA are tools of which Lean principle?',['Identify value','Map the value stream','Create flow','Establish pull'],2,'Step 3 tools: takt, flow, RCA, 5 Whys, PDCA, wastes revisited.'],
+['pull','Standard work, SMED and TPM are grouped under which Lean principle?',['Create flow','Establish pull','Seek perfection','Identify value'],1,'Step 4 tools: push/pull, kanban, supermarket, standard work, SMED, TPM.'],
+['perf','Poka yoke, kaizen and A3 are tools of which Lean principle?',['Seek perfection','Create flow','Map the value stream','Identify value'],0,'Step 5 tools: future VSM, poka yoke, visual management, kaizen, A3, change management.'],
+['map','5S and process mapping belong to which Lean principle?',['Identify value','Map the value stream','Create flow','Establish pull'],1,'Step 2 tools: wastes, 5S, visual management, process maps, value analysis.'],
+['value','VOC and stakeholder analysis belong to which Lean principle?',['Identify value','Create flow','Seek perfection','Establish pull'],0,'Step 1 tools.']
+];
+
+const FLASH=[
+['Muda','Waste: futility, uselessness. Non-value-added activity the customer won\'t pay for.','waste'],
+['Gemba','The actual place where work is done. Gemba walk = go and observe.','s5'],
+['Kaizen','Kai = change, Zen = good. Small, incremental, continuous improvement.','perf'],
+['Kaikaku','Radical improvement in a limited time (1 week to 3 months).','perf'],
+['Poka yoke','Mistake/error proofing. Poka = inadvertent mistake; Yoke = prevent.','perf'],
+['Kanban','"Signal" or "card": when to order, from whom, what quantity. Controls WIP.','pull'],
+['Takt','German for a conductor\'s baton. Takt time = available time ÷ demand.','flow'],
+['Heijunka box','Used in sequential pull to level the mix and quantity of production.','pull'],
+['Andon','Visual status signal: normal / warning / stopped.','perf'],
+['Seiri','Sort (S1): remove what isn\'t needed; red tag.','s5'],
+['Seiton','Set in order (S2): a place for everything, labeled.','s5'],
+['Seiso','Shine (S3): clean; establish safety measures.','s5'],
+['Seiketsu','Standardize (S4): rules, owner, schedules, checklists.','s5'],
+['Shitsuke','Sustain (S5): culture, audits, gemba walks, recognition.','s5'],
+['DOWNTIME','Defect, Overproduction, Waiting, Neglected talent, Transportation, Inventory, Motion, Excess processing.','waste'],
+['Greatest waste','Overproduction (according to Toyota).','waste'],
+['Motion vs Transportation','Motion = PEOPLE move. Transportation = MATERIALS/objects move.','waste'],
+['Value-added (VA)','Customer willing to pay + transforms the product + done right the first time.','value'],
+['Necessary NVA','Not valued but required (law, regulation, safety). MINIMIZE it.','value'],
+['Unnecessary NVA','Pure waste: not valued, not essential. ELIMINATE it.','value'],
+['VOC components','Needs, preferences, pain points.','value'],
+['VOC methods','Surveys, interviews, focus groups, feedback forms, observation, complaints/compliments.','value'],
+['Power-interest grid','High P/High I: manage closely · High P/Low I: keep satisfied · Low P/High I: keep informed · Low/Low: monitor.','value'],
+['Stakeholder types','Primary (direct), Secondary (indirect: suppliers, regulators), Key (high influence).','value'],
+['Engagement strategies','Inform, Consult, Collaborate, Monitor.','value'],
+['5 Lean principles','Identify value → Map value stream → Create flow → Establish pull → Seek perfection.','found'],
+['Lean vs Six Sigma','Lean: waste + respect for people. Six Sigma: variation + statistics (control charts).','found'],
+['Belts','Yellow: basic. Green: project leadership. Black: mentors for projects and Green Belts.','found'],
+['Krafcik 1988','Coined the term "Lean" (Triumph of the Lean Production System).','found'],
+['Deming','PDSA cycle and statistical quality control (1940s–50s).','found'],
+['Shingo 4 dimensions','Cultural enablers, Continuous improvement, Enterprise alignment, Results.','found'],
+['3 Cs (EM)','Curiosity, Connections, Creating value.','found'],
+['Set in order times','YOU find anything ≤30 s; ANYONE finds anything ≤60 s.','s5'],
+['Storage by frequency','Hourly: arm\'s reach · Shift: short walk · Daily: further · Monthly: dept storage · Annually: central/off-site.','s5'],
+['Visual workplace','Self-explaining, self-ordering, self-regulating, self-improving.','perf'],
+['Map levels','30,000 ft: VSM, SIPOC · 10,000 ft: swim lane · Ground: process flow diagram.','map'],
+['SIPOC','Suppliers, Inputs, Process, Outputs, Customers (+ Requirements).','map'],
+['Swim lane','Cross-functional diagram showing roles/departments and HAND-OFFS.','map'],
+['Spaghetti diagram','Physical path of people/items. Reveals MOTION and TRANSPORTATION waste.','map'],
+['Process flow diagram','Most common map. Operations, decisions, delays, storages, handling.','map'],
+['7 mapping steps','Team → scope → steps at gemba → draft → draw → confirm at gemba → finalize.','map'],
+['VSM','Flow of MATERIALS and INFORMATION; 30,000 ft; whole process, not parts.','vsm'],
+['Lead time','Throughput time: order to delivery (includes waits).','vsm'],
+['Cycle time','Process time: one cycle of a process from start to end.','vsm'],
+['Days of inventory','Inventory ÷ daily demand. 7,000 ÷ 920 = 7.6 days.','vsm'],
+['% Value-added','VA time ÷ lead time. Clinic: 25 ÷ 75 = 33%.','flow'],
+['System cycle time','Cycle time of the LONGEST task (bottleneck).','flow'],
+['Takt & demand','Demand ↑ → takt ↓. Demand ↓ → takt ↑.','flow'],
+['Available time excludes','Breaks, lunch, team meetings, clean-up.','flow'],
+['One-piece flow','One unit at a time, no WIP between steps. The Lean ideal.','flow'],
+['5 Whys','Iterative "why?". About 5 on average; ask until the true root cause.','rca'],
+['Jefferson Memorial','Root cause: lights attract insects. Fix: lights on 1 hour later, 90% fewer droppings.','rca'],
+['PDCA Plan steps','1 Clarify · 2 Break down · 3 Target · 4 Root cause · 5 Countermeasures.','rca'],
+['PDCA Do/Check/Act','6 Implement · 7 Evaluate (back to 5 if needed) · 8 Standardize.','rca'],
+['Push','Forecast-driven, independent operations, big lots, hidden problems, "just in case".','pull'],
+['Pull / JIT','Consumption-driven; what is needed, when needed, in the quantity needed.','pull'],
+['Withdrawal vs production kanban','Withdrawal authorizes MOVEMENT. Production authorizes PRODUCTION.','pull'],
+['Supermarket pull','A-type / fill-up / replenishment. Unknown demand; stock on hand.','pull'],
+['Sequential pull','Make to order, known demand, heijunka box, FIFO; needs stability.','pull'],
+['Standard work','Current one best way: safe, proper outcome, highest quality. Followed by all on all shifts.','std'],
+['Standard work chart','Takt, cycle time, work sequence, standard WIP (+ layout and movement).','std'],
+['SMED','Single-Minute Exchange of Dies = quick changeover = setup reduction (SUR).','std'],
+['Internal vs external setup','Internal: machine STOPPED. External: machine RUNNING. Convert internal → external.','std'],
+['OEE','Availability × Performance × Quality. World class ≈ 85%.','std'],
+['Autonomous maintenance','Operators maintain their own equipment.','std'],
+['Poka yoke tenets','Difficult to make, easy to identify, easy to fix a mistake.','perf'],
+['Kaizen event','About 1 week. Also: blitz, workshop, rapid CI. Phases: prepare, conduct, after.','perf'],
+['A3','One page (11×17) problem-solving report following PDCA.','perf'],
+['WIIFM','What\'s In It For Me: the people requirement for change.','perf'],
+['PDCA ↔ DMAIC','Plan = D, M, A · Do = Improve · Check/Act = Control.','perf'],
+['Exam facts','40 questions · 2 hours · 70% to pass (28/40) · open notes · no internet.','found']
+];
+
+const WASTE_SCEN=[
+['A clerk prints 200 copies of a report when only 20 people read it.','Overproduction'],
+['Patients wait 30 minutes for a transport aide.','Waiting'],
+['A technician walks across the lab 15 times a shift to fetch pipettes.','Motion'],
+['Charts are carried from floor 2 to floor 5 and back for signatures.','Transportation'],
+['The pharmacy keeps a 6-month supply of a medicine that expires in 3.','Inventory'],
+['A claim is rejected because a code was entered wrong.','Defect'],
+['Nurses are never asked for ideas on the new unit layout.','Neglected talent'],
+['The same patient address is typed into 4 different forms.','Excess processing'],
+['A machine produces parts for orders that don\'t exist yet.','Overproduction'],
+['An approval sits in a manager\'s inbox for 3 days.','Waiting'],
+['Parts are moved to a central warehouse, then back to the line.','Transportation'],
+['Workers bend and reach because tools are stored on the floor.','Motion'],
+['Finished products are inspected 3 times though the defect rate is zero.','Excess processing'],
+['Piles of half-finished WIP sit between stations.','Inventory'],
+['A surgeon is given an incorrect instrument tray.','Defect'],
+['A skilled engineer is assigned only to data entry.','Neglected talent'],
+['Two departments both build the same monthly spreadsheet.','Overproduction'],
+['An operator stands idle while the oven finishes its cycle.','Waiting'],
+['Staff search for the crash cart key every time.','Motion'],
+['The OR keeps 40 extra suture kits "just in case."','Inventory'],
+['A form is sent to the wrong department and must be redone.','Defect'],
+['A change is announced only after it is implemented.','Neglected talent'],
+['Samples are shipped to an off-site lab when an on-site analyzer exists.','Transportation'],
+['Extra signatures are required on a routine purchase.','Excess processing']
+];
+const WASTES=['Defect','Overproduction','Waiting','Neglected talent','Transportation','Inventory','Motion','Excess processing'];
+
+const ORDER_SETS=[
+{name:'5S steps',items:['Sort','Set in order','Shine','Standardize','Sustain']},
+{name:'5 Lean principles',items:['Identify value','Map the value stream','Create flow','Establish pull','Seek perfection']},
+{name:'PDCA 8 steps',items:['Clarify the problem','Break down the problem','Set a target','Find root cause','Develop countermeasures','Implement countermeasures','Evaluate results','Standardize success']},
+{name:'7 process-mapping steps',items:['Gather your team','Determine boundaries/scope','Find steps at the gemba','Order steps on a draft','Draw the map','Confirm at the gemba','Finalize & distribute']},
+{name:'5S Japanese',items:['Seiri','Seiton','Seiso','Seiketsu','Shitsuke']},
+{name:'Storage: most → least frequent',items:['Arm\'s reach (hourly)','Short walk (every shift)','Further away (daily)','Department storage (monthly)','Central/off-site (annually)']},
+{name:'Jefferson Memorial 5 Whys (symptom → root)',items:['Washed more often','More bird droppings','More birds','More spiders','More insects at dusk','Lights attract insects']},
+{name:'Lean history',items:['Whitney: interchangeable parts (1799)','Taylor: scientific management (1911)','Gilbreths: motion studies (~1915)','Ford & Sorensen: flow lines (1922)','Deming: PDSA & SQC (1940s–50s)','Krafcik coins "Lean" (1988)']}
+];
+
+const MATCH=[
+['Muda','Waste'],['Kaizen','Good change'],['Kaikaku','Radical change'],['Poka yoke','Mistake proofing'],['Kanban','Signal card'],['Takt','Conductor\'s baton'],
+['Gemba','Actual place'],['Andon','Status light'],['Seiri','Sort'],['Seiton','Set in order'],['Seiso','Shine'],['Seiketsu','Standardize'],['Shitsuke','Sustain'],['Heijunka','Level the load']
+];
+
+const SMED_TASKS=[
+['Remove used surgical instruments (OR must be vacant)','I'],['Clean & disinfect surgical area','I'],['Dispose of biohazard waste (clears space)','I'],
+['Restock supplies (stage carts beforehand)','E'],['Prepare & test anesthesia equipment','E'],['Verify patient documentation','E'],
+['Arrange instruments for next case (pre-arrange elsewhere)','E'],['Check & refill cleaning supplies','E'],
+['Unbolt the old die from the press','I'],['Pre-heat the new die before stopping the press','E'],['Gather tools at point-of-use before shutdown','E'],['Swap tires on a race car at the pit stop','I'],
+['Fill out paperwork for the next job while machine runs','E'],['Adjust and test the newly installed die','I']
+];
+
+const TOOL_MAP=[
+['Voice of the customer',0],['Stakeholder analysis',0],['8 wastes',1],['5S',1],['SIPOC',1],['Swim lane diagram',1],['Spaghetti diagram',1],['VSM (current state)',1],['Value analysis',1],
+['Takt time',2],['Flow',2],['Root cause analysis',2],['5 Whys',2],['PDCA',2],['Push/Pull',3],['Kanban/Supermarket',3],['Standard work',3],['SMED/changeover',3],['TPM',3],
+['VSM (future state)',4],['Poka yoke',4],['Kaizen',4],['A3',4],['Change management',4]
+];
+const PRINC=['Identify value','Map value stream','Create flow','Establish pull','Seek perfection'];
+
+/* ================= STATE ================= */
+const LS='lgb_dojo_v1';
+let S={xp:0,done:{},topic:{},flash:{},exams:[],days:[],best:{}};
+function load(){try{const r=localStorage.getItem(LS);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}}
+function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+load();
+(function(){const d=new Date().toISOString().slice(0,10);if(!S.days.includes(d)){S.days.push(d);save()}})();
+function streak(){const set=new Set(S.days);let n=0;let d=new Date();while(set.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
+const LEVELS=[[0,'White belt','🤍'],[150,'Yellow belt','💛'],[450,'Orange belt','🧡'],[900,'Green belt candidate','💚'],[1600,'Green belt ready','🟢'],[2600,'Green belt master','🏅']];
+function level(){let L=LEVELS[0],nx=null;for(let i=0;i<LEVELS.length;i++){if(S.xp>=LEVELS[i][0]){L=LEVELS[i];nx=LEVELS[i+1]||null}}return{L,nx}}
+function addXP(n,msg){S.xp+=n;save();renderXP();if(msg)toast(msg+'  +'+n+' XP')}
+function rec(topic,ok){const t=S.topic[topic]||{c:0,n:0};t.n++;if(ok)t.c++;S.topic[topic]=t;save()}
+
+/* ================= UTIL ================= */
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1800)}
+function confetti(){const c=['#2f8f4e','#e8a317','#2f6fb3','#d64545','#6b4fbb'];for(let i=0;i<40;i++){const e=document.createElement('div');e.className='confetti';e.style.left=Math.random()*100+'vw';e.style.background=c[i%5];e.style.animationDelay=Math.random()*.4+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let cleanup=null;
+
+/* ================= NAV ================= */
+const NAV=[['home','🏠','Home'],['learn','📚','Learn'],['flash','🃏','Flashcards'],['practice','✏️','Practice'],['exam','📝','Mock exam'],['games','🎮','Games'],['cheat','📋','Cheat sheet']];
+function renderNav(){
+ const r=location.hash.slice(1).split('-')[0]||'home';
+ $('#side').innerHTML=`<div class="brand"><div class="belt">🥋</div>Green Belt Dojo</div>`+NAV.map(n=>`<a href="#${n[0]}" class="${r===n[0]?'on':''}"><span class="i">${n[1]}</span>${n[2]}</a>`).join('')+`<div class="xpbox" id="xpbox"></div>`;
+ $('#mnav').innerHTML=NAV.filter(n=>n[0]!=='cheat').map(n=>`<a href="#${n[0]}" class="${r===n[0]?'on':''}"><span class="i">${n[1]}</span>${n[2].split(' ')[0]}</a>`).join('');
+ renderXP();
+}
+function renderXP(){const b=$('#xpbox');if(!b)return;const {L,nx}=level();const pct=nx?Math.round((S.xp-L[0])/(nx[0]-L[0])*100):100;
+ b.innerHTML=`<div style="font-weight:800">${L[2]} ${L[1]}</div><div class="xpbar"><i style="width:${pct}%"></i></div><div style="font-size:12.5px;color:var(--muted)">${S.xp} XP${nx?` · ${nx[0]-S.xp} to ${nx[1]}`:''} · 🔥 ${streak()} day</div>`}
+
+/* ================= VIEWS ================= */
+function vHome(){
+ const done=Object.keys(S.done).length;const tot=Object.values(S.topic).reduce((a,t)=>({c:a.c+t.c,n:a.n+t.n}),{c:0,n:0});
+ const acc=tot.n?Math.round(tot.c/tot.n*100):0;const best=S.exams.length?Math.max(...S.exams.map(e=>e.pct)):null;
+ const weak=Object.entries(S.topic).filter(([k,t])=>t.n>=3).map(([k,t])=>[k,t.c/t.n]).sort((a,b)=>a[1]-b[1]).slice(0,3);
+ const next=MODULES.find(m=>!S.done[m.id]);
+ return `<div class="hero"><div class="deco">🥋</div><h1>Lean Green Belt Dojo</h1><p>Your IISE Lean Green Belt exam prep, built from the 2025–26 course slides. Learn each tool in layers, drill exam-style questions, play games, then take a timed 40-question mock exam.</p>
+ <div class="row"><a href="#learn-${next?next.id:'found'}"><button class="btn">${next?'▶ Continue: '+next.title.split(':')[0]:'Review lessons'}</button></a><a href="#exam"><button class="btn ghost">📝 Take mock exam</button></a></div></div>
+ <div class="grid g4" style="margin-top:16px">
+  <div class="card"><div class="lbl">Lessons done</div><div class="stat">${done}/${MODULES.length}</div></div>
+  <div class="card"><div class="lbl">Practice accuracy</div><div class="stat" style="color:${acc>=70?'var(--g)':acc?'var(--gold)':'inherit'}">${tot.n?acc+'%':'—'}</div><div style="font-size:12.5px;color:var(--muted)">${tot.n} answered</div></div>
+  <div class="card"><div class="lbl">Best mock exam</div><div class="stat" style="color:${best>=70?'var(--g)':best!=null?'var(--red)':'inherit'}">${best!=null?best+'%':'—'}</div><div style="font-size:12.5px;color:var(--muted)">Pass = 70%</div></div>
+  <div class="card"><div class="lbl">Streak</div><div class="stat">🔥 ${streak()}</div><div style="font-size:12.5px;color:var(--muted)">days in a row</div></div>
+ </div>
+ <h2>The exam at a glance</h2>
+ <div class="grid g4"><div class="card"><div class="stat">40</div><div class="lbl">questions</div></div><div class="card"><div class="stat">2 h</div><div class="lbl">time limit</div></div><div class="card"><div class="stat">70%</div><div class="lbl">to pass (28/40)</div></div><div class="card"><div class="stat">📖</div><div class="lbl">open notes, no internet</div></div></div>
+ <p class="sub" style="margin-top:10px">Since the exam is open notes, the <a href="#cheat">cheat sheet</a> is worth printing or keeping open on a second device. Speed comes from knowing where things are.</p>
+ <h2>Your roadmap (the 5 Lean principles)</h2>
+ <div class="road">${['Identify value','Map the value stream','Create flow','Establish pull','Seek perfection'].map((p,i)=>`<div><b>STEP ${i+1}</b>${p}</div>`).join('')}</div>
+ <h2>Fast-track plan</h2>
+ <div class="grid g3">
+  <div class="card"><span class="pill">Day 1 · ~2 h</span><h3>Learn modules 1–6</h3><p style="margin:0;color:var(--muted)">Read the layers, do each check quiz, and play Waste Hunter.</p></div>
+  <div class="card"><span class="pill gold">Day 2 · ~2 h</span><h3>Learn modules 7–11</h3><p style="margin:0;color:var(--muted)">Calc Lab until 5 in a row correct; then SMED Sorter and Order It.</p></div>
+  <div class="card"><span class="pill blue">Day 3 · ~2.5 h</span><h3>Mock exams</h3><p style="margin:0;color:var(--muted)">Two full mocks, a weak-topic practice in between, and flashcards for misses.</p></div>
+ </div>
+ ${weak.length?`<h2>Focus on these</h2><div class="card">${weak.map(([k,v])=>`<div class="bar"><span class="t">${TOPICS[k]}</span><span class="b"><i style="width:${Math.round(v*100)}%;background:${v>=.7?'var(--g)':v>=.5?'var(--gold)':'var(--red)'}"></i></span><b>${Math.round(v*100)}%</b> <a href="#practice-${k}"><button class="btn sm ghost">Drill</button></a></div>`).join('')}</div>`:''}
+ <p style="color:var(--muted);font-size:13px;margin-top:28px">Progress is saved in this browser only. Built from IISE Lean Green Belt slides v1.1 (2025–2026). The real exam's wording will differ, so learn the concepts, not just the questions.</p>`;
+}
+
+function vLearn(){
+ return `<h1>📚 Learn</h1><p class="sub">Each lesson goes intuition → analogy → formal detail → worked example → exam traps, then a 5-question check.</p>
+ <div class="grid g2">${MODULES.map(m=>{const t=S.topic[m.id];return `<div class="card mod" onclick="location.hash='learn-${m.id}'">
+ ${S.done[m.id]?'<span class="done pill">✓ done</span>':''}<div class="num">MODULE ${m.n} · ${m.time}</div><h3>${m.icon} ${m.title}</h3><div style="color:var(--muted);font-size:14px">${m.summary}</div>
+ <div style="margin-top:10px"><span class="pill purple">${m.principle}</span>${t?` <span class="pill ${t.c/t.n>=.7?'':'gold'}">${Math.round(t.c/t.n*100)}% acc</span>`:''}</div></div>`}).join('')}</div>`;
+}
+
+function vModule(id){
+ const m=MODULES.find(x=>x.id===id);if(!m)return vLearn();
+ const i=MODULES.indexOf(m);const nx=MODULES[i+1];
+ setTimeout(()=>miniQuiz(id),0);
+ return `<a class="back" href="#learn">← All lessons</a><div class="num lbl">MODULE ${m.n} · ${m.principle}</div><h1>${m.icon} ${m.title}</h1><p class="sub">${m.summary}</p>
+ <div class="layer L1"><div class="lt">💡 Intuition</div>${m.intuition}</div>
+ <div class="layer L2"><div class="lt">🔗 Analogy</div>${m.analogy}</div>
+ <div class="layer L3"><div class="lt">📐 Formal detail (what the exam tests)</div>${m.formal}</div>
+ <div class="layer L4"><div class="lt">🧮 Worked example</div>${m.example}</div>
+ <div class="layer L5"><div class="lt">⚠️ Exam traps</div><ul>${m.traps.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+ <h2>✅ Check yourself</h2><div class="card" id="mq"></div>
+ <div class="row" style="margin-top:18px;justify-content:space-between">${i>0?`<a href="#learn-${MODULES[i-1].id}"><button class="btn ghost">← ${MODULES[i-1].title.split(':')[0]}</button></a>`:'<span></span>'}${nx?`<a href="#learn-${nx.id}"><button class="btn">${nx.title.split(':')[0]} →</button></a>`:`<a href="#exam"><button class="btn gold">Take the mock exam →</button></a>`}</div>`;
+}
+function miniQuiz(id){
+ const pool=shuffle(Q.filter(q=>q[0]===id)).slice(0,5);let k=0,score=0;const box=$('#mq');if(!box)return;
+ function show(){
+  if(k>=pool.length){const pass=score>=4;box.innerHTML=`<div style="text-align:center;padding:10px"><div class="stat">${score}/${pool.length}</div><p>${pass?'Lesson complete! 🎉':'Not quite yet. Re-read the traps and try again.'}</p><button class="btn" id="mqr">Try another set</button></div>`;
+   if(pass&&!S.done[id]){S.done[id]=1;save();addXP(50,'Lesson complete');confetti()}
+   $('#mqr').onclick=()=>miniQuiz(id);return}
+  qCard(box,pool[k],`${k+1}/${pool.length}`,ok=>{if(ok)score++;k++;show()});
+ }show();
+}
+function qCard(box,q,label,next,opts={}){
+ const order=shuffle(q[2].map((o,i)=>i));
+ box.innerHTML=`<div class="qtop"><span class="pill blue">${TOPICS[q[0]]}</span><span class="lbl">${label}</span></div><div class="qtext">${esc(q[1])}</div>
+ <div>${order.map((oi,j)=>`<button class="opt" data-i="${oi}"><b>${'ABCD'[j]}</b>${esc(q[2][oi])}</button>`).join('')}</div><div id="ex"></div>`;
+ box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+  const pick=+b.dataset.i,ok=pick===q[3];
+  box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.i===q[3])x.classList.add('ok')});if(!ok)b.classList.add('bad');
+  rec(q[0],ok);if(ok)addXP(opts.xp||5);
+  box.querySelector('#ex').innerHTML=`<div class="expl"><b>${ok?'✅ Correct.':'❌ Not quite.'}</b> ${esc(q[4])}</div><div class="row" style="margin-top:12px"><button class="btn" id="nq">Next →</button></div>`;
+  box.querySelector('#nq').onclick=()=>next(ok);box.querySelector('#nq').focus();
+ });
+}
+
+/* Flashcards (Leitner boxes 0-3) */
+function vFlash(){
+ setTimeout(flashRun,0);
+ return `<h1>🃏 Flashcards</h1><p class="sub">Tap the card to flip it. Mark "Got it" or "Again", and cards you miss come back sooner. Keys: <span class="kbd">Space</span> flip, <span class="kbd">←</span> again, <span class="kbd">→</span> got it.</p>
+ <div class="row"><select id="ftopic"><option value="all">All topics (${FLASH.length})</option>${Object.entries(TOPICS).map(([k,v])=>`<option value="${k}">${v} (${FLASH.filter(f=>f[2]===k).length})</option>`).join('')}</select><span id="fstat" class="pill"></span></div>
+ <div style="max-width:620px"><div class="flash" id="fc"><div class="in"><div class="f" id="ff"></div><div class="b" id="fb"></div></div></div>
+ <div class="row" style="justify-content:center"><button class="btn ghost" id="fa">↺ Again</button><button class="btn" id="fg">✓ Got it</button></div></div>`;
+}
+function flashRun(){
+ let deck=[],cur=null;const sel=$('#ftopic');
+ function build(){const t=sel.value;deck=FLASH.map((f,i)=>i).filter(i=>t==='all'||FLASH[i][2]===t);pick()}
+ function pick(){const boxes=deck.map(i=>S.flash[i]||0);const min=Math.min(...boxes);const cand=deck.filter(i=>(S.flash[i]||0)<=min+(Math.random()<.25?1:0));cur=cand[Math.floor(Math.random()*cand.length)];
+  $('#fc').classList.remove('flip');setTimeout(()=>{$('#ff').innerHTML=esc(FLASH[cur][0])+`<div class="hint">tap to flip</div>`;$('#fb').innerHTML=esc(FLASH[cur][1])+`<div class="hint">${TOPICS[FLASH[cur][2]]}</div>`},150);
+  const mastered=deck.filter(i=>(S.flash[i]||0)>=3).length;$('#fstat').textContent=`Mastered ${mastered}/${deck.length}`}
+ sel.onchange=build;$('#fc').onclick=()=>$('#fc').classList.toggle('flip');
+ $('#fg').onclick=()=>{S.flash[cur]=Math.min(3,(S.flash[cur]||0)+1);save();addXP(2);pick()};
+ $('#fa').onclick=()=>{S.flash[cur]=0;save();pick()};
+ const kh=e=>{if(e.target.tagName==='SELECT')return;if(e.key===' '){e.preventDefault();$('#fc').classList.toggle('flip')}else if(e.key==='ArrowRight')$('#fg').click();else if(e.key==='ArrowLeft')$('#fa').click()};
+ document.addEventListener('keydown',kh);cleanup=()=>document.removeEventListener('keydown',kh);build();
+}
+
+/* Practice */
+function vPractice(topic){
+ setTimeout(()=>practiceRun(topic||'all'),0);
+ return `<h1>✏️ Practice</h1><p class="sub">Unlimited exam-style questions with explanations. Pick a topic or mix them all. ${Q.length} questions in the bank.</p>
+ <div class="row" style="margin-bottom:14px"><select id="ptopic"><option value="all">🎲 Mixed (all topics)</option><option value="weak">🎯 My weakest topics</option>${Object.entries(TOPICS).map(([k,v])=>`<option value="${k}">${v} (${Q.filter(q=>q[0]===k).length})</option>`).join('')}</select><span class="pill gold" id="pstreak">Streak 0</span><span class="pill" id="pscore">0/0</span></div>
+ <div class="card" id="pq"></div>`;
+}
+function practiceRun(topic){
+ const sel=$('#ptopic');sel.value=topic;let st=0,c=0,n=0,pool=[],k=0;
+ function build(){const t=sel.value;let p;
+  if(t==='weak'){const ws=Object.entries(S.topic).filter(([k,v])=>v.n>=2).sort((a,b)=>a[1].c/a[1].n-b[1].c/b[1].n).slice(0,3).map(x=>x[0]);p=Q.filter(q=>ws.length?ws.includes(q[0]):true)}
+  else p=Q.filter(q=>t==='all'||q[0]===t);pool=shuffle(p);k=0;next()}
+ function next(){if(k>=pool.length){pool=shuffle(pool);k=0}
+  qCard($('#pq'),pool[k],`Q${n+1}`,ok=>{n++;if(ok){c++;st++;if(st%5===0){addXP(15,`🔥 ${st} in a row!`);if(st%10===0)confetti()}}else st=0;
+   $('#pstreak').textContent='Streak '+st;$('#pscore').textContent=`${c}/${n} (${Math.round(c/n*100)}%)`;k++;next()})}
+ sel.onchange=build;build();
+}
+
+/* Mock exam */
+let EX=null;
+function vExam(){
+ if(EX&&!EX.done)return examView();
+ const hist=S.exams.slice(-6).reverse();
+ return `<h1>📝 Mock exam</h1><p class="sub">This mirrors the real format: 40 questions, a 2-hour limit, 70% to pass. Questions are drawn from every topic in proportion to the course. You can move back and forth and change answers before you submit.</p>
+ <div class="card"><div class="row"><button class="btn gold" id="startEx">Start full exam (40 Q · 120 min)</button><button class="btn ghost" id="startQuick">Quick mock (20 Q · 60 min)</button></div>
+ <p style="color:var(--muted);font-size:14px;margin-bottom:0">Tip: on the real exam, spend about 3 minutes per question. Flag hard ones and come back, since there's no penalty for guessing.</p></div>
+ ${hist.length?`<h2>History</h2><div class="card"><table><tr><th>Date</th><th>Score</th><th>Result</th></tr>${hist.map(e=>`<tr><td>${e.date}</td><td>${e.c}/${e.n} (${e.pct}%)</td><td>${e.pct>=70?'<span class="pill">PASS</span>':'<span class="pill red">Below 70%</span>'}</td></tr>`).join('')}</table></div>`:''}`;
+}
+function startExam(n,mins){
+ const tps=Object.keys(TOPICS);const per=Math.floor(n/tps.length);let pick=[];
+ tps.forEach(t=>pick.push(...shuffle(Q.filter(q=>q[0]===t)).slice(0,per)));
+ const rest=shuffle(Q.filter(q=>!pick.includes(q)));pick.push(...rest.slice(0,n-pick.length));
+ EX={qs:shuffle(pick).map(q=>({q,order:shuffle([0,1,2,3])})),ans:{},flag:{},cur:0,end:Date.now()+mins*60000,done:false};
+ render();
+}
+function examView(){
+ const it=EX.qs[EX.cur];const q=it.q;
+ setTimeout(()=>{
+  const tick=()=>{const left=Math.max(0,EX.end-Date.now());const el=$('#tmr');if(!el)return;const m=Math.floor(left/60000),s=Math.floor(left%60000/1000);el.textContent=`⏱ ${m}:${String(s).padStart(2,'0')}`;if(left<=0)submitExam()};
+  tick();const iv=setInterval(tick,1000);cleanup=()=>clearInterval(iv);
+ },0);
+ const answered=Object.keys(EX.ans).length;
+ return `<div class="qtop"><h1 style="margin:0">📝 Mock exam</h1><span class="timer" id="tmr"></span></div>
+ <div class="dots">${EX.qs.map((x,i)=>`<span class="${EX.ans[i]!=null?'a':''} ${i===EX.cur?'c':''}" onclick="EX.cur=${i};render()" title="${EX.flag[i]?'flagged':''}">${EX.flag[i]?'⚑':i+1}</span>`).join('')}</div>
+ <div class="card"><div class="qtop"><span class="lbl">Question ${EX.cur+1} of ${EX.qs.length}</span><button class="btn sm ghost" onclick="EX.flag[EX.cur]=!EX.flag[EX.cur];render()">${EX.flag[EX.cur]?'⚑ Unflag':'⚐ Flag'}</button></div>
+ <div class="qtext">${esc(q[1])}</div>${it.order.map((oi,j)=>`<button class="opt ${EX.ans[EX.cur]===oi?'pick':''}" onclick="EX.ans[EX.cur]=${oi};render()"><b>${'ABCD'[j]}</b>${esc(q[2][oi])}</button>`).join('')}
+ <div class="row" style="justify-content:space-between;margin-top:14px"><button class="btn ghost" ${EX.cur===0?'disabled':''} onclick="EX.cur--;render()">← Prev</button>
+ <span class="lbl">${answered}/${EX.qs.length} answered</span>
+ ${EX.cur<EX.qs.length-1?`<button class="btn" onclick="EX.cur++;render()">Next →</button>`:`<button class="btn gold" id="subBtn">Submit exam</button>`}</div>
+ <div id="subErr"></div></div>
+ <div style="text-align:right;margin-top:10px"><button class="btn sm ghost" id="subAny">Submit now</button></div>`;
+}
+function trySubmit(){const un=EX.qs.length-Object.keys(EX.ans).length;
+ if(un>0&&!EX.confirm){EX.confirm=1;$('#subErr').innerHTML=`<div class="err">You have ${un} unanswered question(s). Click submit again to finish anyway.</div>`;return}
+ submitExam()}
+function submitExam(){if(!EX||EX.done)return;EX.done=true;if(cleanup){cleanup();cleanup=null}
+ let c=0;const by={};EX.qs.forEach((it,i)=>{const ok=EX.ans[i]===it.q[3];if(ok)c++;rec(it.q[0],ok);const t=by[it.q[0]]||{c:0,n:0};t.n++;if(ok)t.c++;by[it.q[0]]=t});
+ const pct=Math.round(c/EX.qs.length*100);S.exams.push({date:new Date().toLocaleDateString(),c,n:EX.qs.length,pct});save();
+ addXP(c*4+(pct>=70?100:0),pct>=70?'Exam passed!':'Exam submitted');if(pct>=70)confetti();
+ EX.result={c,pct,by};location.hash='exam-result';render();
+}
+function vExamResult(){
+ if(!EX||!EX.result)return vExam();const {c,pct,by}=EX.result;
+ return `<h1>${pct>=70?'🎉 You passed!':'📈 Keep going'}</h1>
+ <div class="grid g3"><div class="card"><div class="lbl">Score</div><div class="stat" style="color:${pct>=70?'var(--g)':'var(--red)'}">${pct}%</div><div>${c} / ${EX.qs.length} correct</div></div>
+ <div class="card"><div class="lbl">Needed to pass</div><div class="stat">${Math.ceil(EX.qs.length*.7)}</div><div>${pct>=70?'You cleared it':'You need '+(Math.ceil(EX.qs.length*.7)-c)+' more'}</div></div>
+ <div class="card"><div class="row"><button class="btn" onclick="EX=null;location.hash='exam'">New exam</button><a href="#practice-weak"><button class="btn ghost">Drill weak topics</button></a></div></div></div>
+ <h2>By topic</h2><div class="card">${Object.entries(by).sort((a,b)=>a[1].c/a[1].n-b[1].c/b[1].n).map(([k,t])=>{const v=t.c/t.n;return `<div class="bar"><span class="t">${TOPICS[k]}</span><span class="b"><i style="width:${v*100}%;background:${v>=.7?'var(--g)':v>=.5?'var(--gold)':'var(--red)'}"></i></span><b>${t.c}/${t.n}</b></div>`}).join('')}</div>
+ <h2>Review answers</h2>${EX.qs.map((it,i)=>{const q=it.q,a=EX.ans[i],ok=a===q[3];return `<div class="card" style="margin-bottom:10px;border-left:4px solid ${ok?'var(--g)':'var(--red)'};border-radius:0 16px 16px 0"><div class="lbl">${i+1} · ${TOPICS[q[0]]}</div><div class="qtext" style="font-size:15.5px">${esc(q[1])}</div>
+ ${!ok?`<div style="color:var(--red)">Your answer: ${a!=null?esc(q[2][a]):'(blank)'}</div>`:''}<div style="color:var(--g)">✓ ${esc(q[2][q[3]])}</div><div class="expl">${esc(q[4])}</div></div>`}).join('')}`;
+}
+
+/* Games */
+function vGames(){
+ const G=[['waste','🗑️','Waste Hunter','Name the waste in each real-world scenario before time runs out. Combos multiply your points.'],['order','🔢','Order It','Click the steps in the right order: 5S, PDCA, Lean principles, 5 Whys, history and more.'],['memory','🧠','Japanese Match','A memory game pairing Lean\'s Japanese and German terms with their meanings.'],['calc','🧮','Calc Lab','Random takt, OEE, lead time, %VA and inventory-days problems with step-by-step solutions.'],['smed','🔧','SMED Sorter','Internal or external setup? Sort the changeover tasks.'],['map','🧭','Tool → Principle','Which of the 5 Lean principles does each tool belong to?']];
+ return `<h1>🎮 Games</h1><p class="sub">Learning with fun. Each game trains a skill the exam tests.</p><div class="grid g3">${G.map(g=>`<div class="card mod" onclick="location.hash='games-${g[0]}'"><div style="font-size:34px">${g[1]}</div><h3>${g[2]}</h3><div style="color:var(--muted);font-size:14px">${g[3]}</div>${S.best[g[0]]!=null?`<div style="margin-top:10px"><span class="pill gold">Best: ${S.best[g[0]]}</span></div>`:''}</div>`).join('')}</div>`;
+}
+function best(g,v){if(S.best[g]==null||v>S.best[g]){S.best[g]=v;save();return true}return false}
+
+function gWaste(){
+ setTimeout(()=>{
+  let pool=shuffle(WASTE_SCEN),k=0,score=0,combo=0,lives=3,t0,iv;const box=$('#gw');
+  function next(){if(k>=pool.length||lives<=0)return end();const [s,a]=pool[k];let left=12;
+   box.innerHTML=`<div class="qtop"><span>❤️ ${'♥'.repeat(lives)}</span><span class="combo">${combo>1?'x'+combo+' COMBO':''}</span><span class="lbl">Score ${score}</span><span class="timer" id="wt">12</span></div><div class="bigq">${esc(s)}</div><div class="grid g4">${shuffle(WASTES).map(w=>`<button class="tile" data-w="${w}">${w}</button>`).join('')}</div>`;
+   box.querySelectorAll('.tile').forEach(b=>b.onclick=()=>answer(b.dataset.w,b));
+   iv=setInterval(()=>{left--;const e=$('#wt');if(e)e.textContent=left;if(left<=0){clearInterval(iv);answer(null)}},1000);cleanup=()=>clearInterval(iv);
+   function answer(w,b){clearInterval(iv);const ok=w===a;box.querySelectorAll('.tile').forEach(x=>{x.disabled=true;if(x.dataset.w===a)x.classList.add('sel')});
+    if(ok){combo++;const pts=10*Math.min(combo,5)+left;score+=pts;rec('waste',true);toast(`+${pts}`)}else{combo=0;lives--;rec('waste',false);if(b)b.classList.add('wrong')}
+    setTimeout(()=>{k++;next()},ok?600:1400)}}
+  function end(){const nb=best('waste',score);addXP(Math.round(score/5),'Waste Hunter');if(nb&&score>0)confetti();
+   box.innerHTML=`<div style="text-align:center;padding:20px"><div class="stat">${score} pts</div><p>${nb?'🏆 New best!':'Best: '+S.best.waste}</p><p style="color:var(--muted)">Remember: <b>Motion = people</b>, <b>Transportation = things</b>, <b>Overproduction = the greatest waste</b>.</p><button class="btn" onclick="render()">Play again</button></div>`}
+  next();
+ },0);
+ return `<a class="back" href="#games">← Games</a><h1>🗑️ Waste Hunter</h1><p class="sub">12 seconds per scenario. 3 lives. Consecutive correct answers build a combo (up to ×5).</p><div class="card" id="gw"></div>`;
+}
+
+function gOrder(){
+ setTimeout(()=>{
+  const box=$('#go');let set=0,mist=0,t0=Date.now();
+  function run(i){set=i;const S0=ORDER_SETS[i];let step=0;mist=0;t0=Date.now();
+   box.innerHTML=`<div class="row" style="margin-bottom:12px"><select id="oset">${ORDER_SETS.map((o,j)=>`<option value="${j}" ${j===i?'selected':''}>${o.name}</option>`).join('')}</select><span class="pill red" id="omis">Mistakes 0</span></div>
+   <div class="bigq" style="min-height:0" id="oprog">Click item #1</div><div class="grid g3" id="otiles">${shuffle(S0.items.map((t,j)=>j)).map(j=>`<button class="tile" data-j="${j}">${esc(S0.items[j])}</button>`).join('')}</div>`;
+   $('#oset').onchange=e=>run(+e.target.value);
+   box.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{if(b.classList.contains('gone'))return;
+    if(+b.dataset.j===step){b.classList.add('gone');b.innerHTML=`<span><b>${step+1}.</b> ${esc(S0.items[step])}</span>`;step++;
+     if(step===S0.items.length){const sec=Math.round((Date.now()-t0)/1000);addXP(mist===0?25:10,mist===0?'Perfect order!':'Done');if(mist===0)confetti();
+      $('#oprog').innerHTML=`✅ ${S0.name} done in ${sec}s with ${mist} mistake(s). <button class="btn sm" style="margin-left:10px" id="onext">Next set →</button>`;$('#onext').onclick=()=>run((i+1)%ORDER_SETS.length)}
+     else $('#oprog').textContent=`Click item #${step+1}`}
+    else{mist++;$('#omis').textContent='Mistakes '+mist;b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong')}})}
+  run(0)},0);
+ return `<a class="back" href="#games">← Games</a><h1>🔢 Order It</h1><p class="sub">Sequences the exam loves to test. Aim for zero mistakes.</p><div class="card" id="go"></div>`;
+}
+
+function gMemory(){
+ setTimeout(()=>{
+  const box=$('#gm');const pairs=shuffle(MATCH).slice(0,8);let cards=shuffle(pairs.flatMap((p,i)=>[{t:p[0],i},{t:p[1],i}]));let open=[],matched=0,moves=0,lock=false;
+  box.innerHTML=`<div class="row" style="margin-bottom:12px"><span class="pill" id="mm">Moves 0</span><button class="btn sm ghost" onclick="render()">New board</button></div><div class="grid g4" id="mg">${cards.map((c,k)=>`<button class="tile mem hidden" data-k="${k}">${esc(c.t)}</button>`).join('')}</div>`;
+  box.querySelectorAll('.mem').forEach(b=>b.onclick=()=>{if(lock||!b.classList.contains('hidden'))return;b.classList.remove('hidden');open.push(b);
+   if(open.length===2){moves++;$('#mm').textContent='Moves '+moves;const [a,c]=open;
+    if(cards[a.dataset.k].i===cards[c.dataset.k].i){a.classList.add('matched');c.classList.add('matched');open=[];matched++;
+     if(matched===8){const sc=Math.max(0,40-moves);best('memory',sc);addXP(30,`Matched in ${moves} moves`);confetti()}}
+    else{lock=true;setTimeout(()=>{a.classList.add('hidden');c.classList.add('hidden');open=[];lock=false},800)}}})},0);
+ return `<a class="back" href="#games">← Games</a><h1>🧠 Japanese Match</h1><p class="sub">Flip two cards and match each term to its meaning. Fewer moves gives a higher score.</p><div class="card" id="gm"></div>`;
+}
+
+function gCalc(){
+ setTimeout(()=>{
+  const box=$('#gc');let streakC=0;
+  const r=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+  const gens=[
+   ()=>{const h=r(7,10),br=r(3,6)*10,d=r(4,12)*5;const av=h*60-br;const ans=+(av/d).toFixed(2);return{q:`A shift is ${h} hours with ${br} minutes of breaks/meetings. Demand is ${d} units per shift. What is the takt time in <b>minutes</b> per unit?`,ans,unit:'min',sol:`Available = ${h}×60 − ${br} = ${av} min. Takt = ${av} ÷ ${d} = <b>${ans} min</b>.`}},
+   ()=>{const av=r(400,460),d=r(40,90);const ans=Math.round(av*60/d);return{q:`Available time is ${av} minutes per shift and demand is ${d} pieces. What is takt in <b>seconds</b>?`,ans,unit:'s',tol:1,sol:`${av} × 60 = ${av*60} s. ${av*60} ÷ ${d} = <b>${ans} s</b>.`}},
+   ()=>{const a=r(80,98),p=r(80,99),q=r(90,100);const ans=+(a*p*q/10000).toFixed(1);return{q:`Availability = ${a}%, Performance = ${p}%, Quality = ${q}%. What is OEE (%)? Is it world-class?`,ans,unit:'%',tol:.2,sol:`OEE = ${a/100} × ${p/100} × ${q/100} = <b>${ans}%</b>. ${ans>=85?'≥ 85%, so world-class.':'Below the 85% world-class level.'}`}},
+   ()=>{const pt=r(8,11)*60,dn=r(3,8)*10,ic=r(5,15),out=Math.floor((pt-dn)/ic*r(80,95)/100),good=out-r(0,4);const A=(pt-dn)/pt,P=ic*out/(pt-dn),Qq=good/out;const ans=+(A*P*Qq*100).toFixed(1);
+     return{q:`Planned time ${pt} min, downtime ${dn} min, ideal cycle time ${ic} min/unit, total output ${out}, good output ${good}. What is OEE (%)?`,ans,unit:'%',tol:.3,sol:`A = ${pt-dn}/${pt} = ${(A*100).toFixed(1)}%. P = (${ic}×${out})/${pt-dn} = ${(P*100).toFixed(1)}%. Q = ${good}/${out} = ${(Qq*100).toFixed(1)}%. OEE = <b>${ans}%</b>.`}},
+   ()=>{const w=[r(2,15),r(5,20),r(5,20)],c=[r(2,6),r(4,10),r(10,25)];const lt=w.reduce((a,b)=>a+b)+c.reduce((a,b)=>a+b);const va=c[1]+c[2];const ans=Math.round(va/lt*100);
+     return{q:`A clinic visit: check-in ${c[0]} min (necessary NVA), wait ${w[0]}, nurse exam ${c[1]} (VA), wait ${w[1]}, physician ${c[2]} (VA), wait ${w[2]}. What is % value-added time (nearest %)?`,ans,unit:'%',tol:1,sol:`Lead time = ${[...c,...w].join(' + ')} = ${lt} min. VA = ${c[1]} + ${c[2]} = ${va}. %VA = ${va}/${lt} = <b>${ans}%</b>.`}},
+   ()=>{const inv=r(30,90)*100,m=r(10,30)*1000,dd=20;const daily=m/dd;const ans=+(inv/daily).toFixed(1);return{q:`Inventory is ${inv.toLocaleString()} pcs. Monthly demand is ${m.toLocaleString()} pcs over ${dd} working days. How many <b>days of inventory</b>?`,ans,unit:'days',tol:.1,sol:`Daily demand = ${m} ÷ ${dd} = ${daily}. Days = ${inv} ÷ ${daily} = <b>${ans} days</b>.`}},
+   ()=>{const h=r(8,12),br=r(4,8)*10,ors=r(3,8),s=r(20,50);const av=(h*60-br)*ors;const ans=+(av/s).toFixed(1);return{q:`ORs run ${h} h/day with ${br} min of breaks/cleaning each. There are ${ors} ORs and ${s} surgeries needed per day. Takt time (min)?`,ans,unit:'min',tol:.1,sol:`(${h}×60 − ${br}) × ${ors} = ${av} min. ${av} ÷ ${s} = <b>${ans} min</b>.`}},
+   ()=>{const t=[r(3,10),r(5,12),r(4,10),r(2,8),r(3,9)];const ext=[0,1,0,1,1];const ans=t.filter((x,i)=>!ext[i]).reduce((a,b)=>a+b,0);const names=['Remove used tools (machine must be off)','Stage next tools at point of use','Swap fixture (machine off)','Print next job paperwork','Pre-heat new die'];
+     return{q:`A changeover has: ${names.map((n,i)=>`${n} ${t[i]} min`).join('; ')}. After converting every possible task to external, how many minutes of internal setup remain?`,ans,unit:'min',sol:`Internal (needs machine off): ${t[0]} + ${t[2]} = <b>${ans} min</b>. The rest run while the machine operates (external).`}}
+  ];
+  function next(){const g=gens[Math.floor(Math.random()*gens.length)]();
+   box.innerHTML=`<div class="qtop"><span class="pill gold">Streak ${streakC}</span><span class="lbl">Answer within ±${g.tol||.05} ${g.unit}</span></div><div class="bigq" style="font-weight:600;font-size:16.5px">${g.q}</div>
+   <form id="cf" class="row"><input class="num" id="ci" inputmode="decimal" placeholder="answer" autocomplete="off"><span>${g.unit}</span><button class="btn">Check</button><button type="button" class="btn ghost" id="cs">Show solution</button></form><div id="cerr"></div><div id="cres"></div>`;
+   $('#ci').focus();$('#ci').oninput=()=>$('#cerr').innerHTML='';
+   const show=(ok,v)=>{$('#cres').innerHTML=`<div class="expl"><b>${ok?'✅ Correct!':ok===false?'❌ Not quite.':'📘 Solution'}</b> ${g.sol}</div><button class="btn" style="margin-top:10px" id="cn">Next problem →</button>`;$('#cn').onclick=next;$('#cf').querySelectorAll('button,input').forEach(x=>x.disabled=true)};
+   $('#cf').onsubmit=e=>{e.preventDefault();const raw=$('#ci').value.trim().replace(/[%,]/g,'');if(raw===''||isNaN(+raw)){$('#cerr').innerHTML='<div class="err">Enter a number first.</div>';return}
+    const v=+raw,ok=Math.abs(v-g.ans)<=(g.tol||.05)+1e-9;rec('flow',ok);if(ok){streakC++;addXP(12,'Calc correct');best('calc',streakC);if(streakC%5===0)confetti()}else streakC=0;show(ok,v)};
+   $('#cs').onclick=()=>{streakC=0;show(null)}}
+  next()},0);
+ return `<a class="back" href="#games">← Games</a><h1>🧮 Calc Lab</h1><p class="sub">Endless randomized problems on takt time, OEE, % value-added, days of inventory and SMED. Get 5 in a row to be exam-ready on math.</p><div class="card" id="gc"></div>`;
+}
+
+function gSmed(){
+ setTimeout(()=>{
+  const box=$('#gs');const tasks=shuffle(SMED_TASKS);let k=0,c=0;const placed={I:[],E:[]};
+  function draw(){box.innerHTML=`${k<tasks.length?`<div class="bigq">${esc(tasks[k][0])}</div><div class="row"><button class="btn" id="bI">⛔ Internal (machine stopped)</button><button class="btn gold" id="bE">▶️ External (machine running)</button></div>`:`<div class="bigq">Done: ${c}/${tasks.length} correct. <button class="btn sm" style="margin-left:10px" onclick="render()">Again</button></div>`}
+   <div class="sortbins"><div class="bin"><h4>Internal</h4>${placed.I.map(x=>`<span class="chip ${x[1]?'ok':'bad'}">${esc(x[0])}</span>`).join('')}</div><div class="bin"><h4>External</h4>${placed.E.map(x=>`<span class="chip ${x[1]?'ok':'bad'}">${esc(x[0])}</span>`).join('')}</div></div>`;
+   if(k<tasks.length){$('#bI').onclick=()=>go('I');$('#bE').onclick=()=>go('E')}
+   else{best('smed',c);addXP(c*3,'SMED sorted');if(c===tasks.length)confetti()}}
+  function go(b){const ok=tasks[k][1]===b;if(ok)c++;rec('std',ok);placed[b].push([tasks[k][0],ok]);if(!ok)toast('That one is '+(tasks[k][1]==='I'?'internal':'external'));k++;draw()}
+  draw()},0);
+ return `<a class="back" href="#games">← Games</a><h1>🔧 SMED Sorter</h1><p class="sub">Internal = it can only happen while the equipment or room is stopped. External = it can be done while it runs. Red chips are wrong.</p><div class="card" id="gs"></div>`;
+}
+
+function gMap(){
+ setTimeout(()=>{
+  const box=$('#gp');const tools=shuffle(TOOL_MAP);let k=0,c=0;
+  function draw(){if(k>=tools.length){best('map',c);addXP(c*2,'Mapping done');if(c>=tools.length-1)confetti();box.innerHTML=`<div style="text-align:center"><div class="stat">${c}/${tools.length}</div><p>Visual management appears in both Step 2 and Step 5 of the course map.</p><button class="btn" onclick="render()">Again</button></div>`;return}
+   box.innerHTML=`<div class="qtop"><span class="lbl">${k+1}/${tools.length}</span><span class="pill">${c} correct</span></div><div class="bigq" style="justify-content:center;font-size:22px">${esc(tools[k][0])}</div><div class="grid g3">${PRINC.map((p,i)=>`<button class="tile" data-i="${i}">${i+1}. ${p}</button>`).join('')}</div>`;
+   box.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{const ok=+b.dataset.i===tools[k][1];if(ok)c++;else toast('→ '+PRINC[tools[k][1]]);b.classList.add(ok?'sel':'wrong');setTimeout(()=>{k++;draw()},ok?350:900)})}
+  draw()},0);
+ return `<a class="back" href="#games">← Games</a><h1>🧭 Tool → Principle</h1><p class="sub">The course groups every tool under one of the 5 Lean principles. Exams test this mapping.</p><div class="card" id="gp"></div>`;
+}
+
+function vCheat(){
+ const C=[
+ ['Exam','<ul><li>40 Q · 2 h · 70% (28/40) · open notes · no internet</li></ul>'],
+ ['5 Lean principles → tools','<ul><li><b>1 Identify value</b>: VOC, stakeholder analysis</li><li><b>2 Map value stream</b>: wastes, 5S, visual mgmt, flowchart, SIPOC, swim lane, spaghetti, VSM (current), value analysis</li><li><b>3 Create flow</b>: takt, flow, RCA, 5 Whys, PDCA</li><li><b>4 Establish pull</b>: push/pull, kanban, supermarket, standard work, SMED, TPM</li><li><b>5 Seek perfection</b>: future VSM, poka yoke, visual mgmt, kaizen, A3, change mgmt</li></ul>'],
+ ['Formulas','<div class="formula">Takt = available time ÷ demand<br>Prod. rate = demand ÷ time (1/takt)<br>Lead time = Σ waits + Σ cycle times<br>%VA = VA time ÷ lead time<br>Days inv = inventory ÷ daily demand<br>OEE = A × P × Q (85% = world class)<br>A = operating ÷ planned<br>P = ideal CT × output ÷ operating<br>Q = good ÷ total</div>'],
+ ['Worked numbers from slides','<ul><li>435 min × 60 ÷ 55 = <b>474 s</b></li><li>40 h ÷ 100 = <b>24 min</b>; 2.5 units/h</li><li>Clinic LT <b>75</b>, VA 25 → <b>33%</b>, system CT 20</li><li>OR takt = 540 × 5 ÷ 40 = <b>67.5 min</b></li><li>7,000 ÷ 920 = <b>7.6 days</b></li><li>OR VSM LT = 27 + 145 = <b>172 min</b></li><li>OR SMED 40 → <b>18 min</b> internal</li><li>OEE case: A 90%, Q 87.5%</li></ul>'],
+ ['8 wastes: DOWNTIME','<ul><li>Defect · Overproduction (<b>greatest</b>) · Waiting · Neglected talent (added later) · Transportation (things) · Inventory · Motion (people) · Excess processing</li><li>Also TIM WOOD / TIM U WOOD / TRIM WOOD</li></ul>'],
+ ['Value','<ul><li>VA: pays + transforms + right first time</li><li>Unnecessary NVA → eliminate</li><li>Necessary NVA (law/safety) → minimize</li><li>&gt;50% of a process is waste</li><li>VOC: needs, preferences, pain points</li></ul>'],
+ ['Stakeholders','<ul><li>Hi P/Hi I: manage closely · Hi P/Lo I: keep satisfied · Lo P/Hi I: keep informed · Lo/Lo: monitor</li><li>Primary (direct) · Secondary (suppliers, regulators) · Key (influence)</li><li>Inform · Consult · Collaborate · Monitor</li></ul>'],
+ ['5S','<ul><li>Sort/Seiri (red tag) → Set in order/Seiton (30 s you, 60 s anyone) → Shine/Seiso → Standardize/Seiketsu (owner, checklists) → Sustain/Shitsuke (audits, gemba)</li><li>Hourly: arm · shift: short walk · daily: further · monthly: dept · annual: off-site</li></ul>'],
+ ['Maps','<ul><li>30,000 ft: VSM, SIPOC · 10,000 ft: swim lane · ground: flowchart</li><li>Swim lane = cross-functional, <b>hand-offs</b></li><li>Spaghetti = <b>motion + transport</b></li><li>VSM = materials + information, whole process</li><li>Flowchart = most common</li></ul>'],
+ ['PDCA','<ul><li><b>P</b>: 1 clarify · 2 break down · 3 target · 4 root cause · 5 countermeasures</li><li><b>D</b>: 6 implement (pilot)</li><li><b>C</b>: 7 evaluate (→ back to 5)</li><li><b>A</b>: 8 standardize, share</li><li>P = DMA, D = I, C/A = C (DMAIC)</li></ul>'],
+ ['Pull','<ul><li>Push = forecast; pull = consumption (JIT)</li><li>Withdrawal kanban = move; production kanban = make</li><li>Supermarket (A-type, fill-up) = unknown demand, stock on hand</li><li>Sequential = known demand, heijunka box, FIFO, needs stability</li></ul>'],
+ ['Std work · SMED · TPM','<ul><li>Std work = current one best way, safe, all shifts, employee-focused</li><li>Chart: takt, CT, sequence, std WIP</li><li>SMED: internal = stopped, external = running → convert I→E; Toyota &lt;10 min</li><li>TPM: equipment mgmt, preventive/predictive, autonomous (operators)</li></ul>'],
+ ['Perfection','<ul><li>Poka (mistake) yoke (prevent): hard to make, easy to see, easy to fix; forced control or warnings; blame the system</li><li>Kaizen = small incremental; kaikaku = radical (1 wk–3 mo); event ≈ 1 week, 3 phases</li><li>A3 = one 11×17 page, PDCA</li><li>Andon: normal/warning/stopped</li><li>Visual workplace: self-explaining, -ordering, -regulating, -improving</li><li>Change: awareness, sponsorship, engagement, comms, training, resistance, sustain; WIIFM</li></ul>'],
+ ['People & history','<ul><li>Whitney 1799 · Taylor 1911 · Gilbreths ~1915 (healthcare) · Ford 1922 · Deming PDSA/SQC · Ohno & Shingo TPS · Krafcik "Lean" 1988</li><li>Graban: no Lean without PDCA · Zidel: no improvement without standardization</li><li>Shingo: cultural enablers, CI, enterprise alignment, results</li><li>Six Sigma&rsquo;s differentiator: control charts</li></ul>']
+ ];
+ return `<h1>📋 Cheat sheet</h1><p class="sub">The exam is open notes. Keep this open on a second screen, or copy it into your notes.</p><div class="row" style="margin-bottom:14px"><button class="btn ghost sm" id="copyC">📋 Copy as text</button></div><div class="grid g2 cheat" id="cheatBody">${C.map(c=>`<div class="card"><h3>${c[0]}</h3>${c[1]}</div>`).join('')}</div>`;
+}
+
+/* ================= ROUTER ================= */
+function render(){
+ if(cleanup){cleanup();cleanup=null}
+ const h=location.hash.slice(1)||'home';const [r,sub]=[h.split('-')[0],h.split('-').slice(1).join('-')];let html;
+ if(r==='learn')html=sub?vModule(sub):vLearn();
+ else if(r==='flash')html=vFlash();
+ else if(r==='practice')html=vPractice(sub);
+ else if(r==='exam')html=sub==='result'?vExamResult():vExam();
+ else if(r==='games')html=({waste:gWaste,order:gOrder,memory:gMemory,calc:gCalc,smed:gSmed,map:gMap}[sub]||vGames)();
+ else if(r==='cheat')html=vCheat();
+ else html=vHome();
+ $('#main').innerHTML=html;renderNav();
+ if(r==='exam'&&!sub&&!(EX&&!EX.done)){$('#startEx').onclick=()=>startExam(40,120);$('#startQuick').onclick=()=>startExam(20,60)}
+ if(r==='exam'&&EX&&!EX.done){const sb=$('#subBtn');if(sb)sb.onclick=trySubmit;$('#subAny').onclick=trySubmit}
+ if(r==='cheat'){$('#copyC').onclick=async()=>{try{await navigator.clipboard.writeText($('#cheatBody').innerText);toast('Copied to clipboard')}catch(e){toast('Copy blocked: select the text and copy manually')}}}
+}
+window.addEventListener('hashchange',()=>{window.scrollTo(0,0);render()});
+render();
+</script>
+</body>
+</html>
